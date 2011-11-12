@@ -1,0 +1,63 @@
+=head1 NAME
+
+cpanfile - A format for describing CPAN dependencies for Perl applications
+
+=head1 SYNOPSIS
+
+  requires 'Catalyst', '5.8000';
+  requires 'CatalystX::Singleton', '>= 1.1000, < 2.000';
+
+  recommends 'JSON::XS', '2.0';
+  conflicts 'JSON', '< 1.0';
+
+  osname 'MSWin32' => sub {
+      requires 'Win32::File';
+  };
+
+  on 'test' => sub {
+      requires 'Test::More', '>= 0.96, < 2.0';
+      recommends 'Test::TCP', '1.12';
+  };
+
+  on 'develop' => sub {
+      recommends 'Devel::NYTProf';
+  };
+
+  perl '< v5.10' => sub {
+      requires 'Hash::Util::FieldHash::Compat';
+  };
+
+=head1 VERSION
+
+v0.9.0
+
+=head1 DESCRIPTION  
+
+C<cpanfile> describes CPAN dependencies required to execute associated
+Perl code.
+
+Place the C<cpanfile> in the root of the directory containing the
+associated code. For instance, in a Catalyst application, place the
+C<cpanfile> in the same directory as C<myapp.conf>.
+
+Tools supporting C<cpanfile> format (e.g. L<cpanm> and L<carton>) will
+automatically detect the file and install dependencies for the code to
+run.
+
+=head1 AUTHOR
+
+Tatsuhiko Miyagawa
+
+=head1 ACKNOWLEDGES
+
+The format (DSL syntax) is inspired by L<Module::Install> and
+L<Module::Build::Functions>.
+
+C<cpanfile> specification (this document) is based on Ruby's
+L<Gemfile|http://gembundler.com/man/gemfile.5.html> specification.
+
+=head1 SEE ALSO
+
+L<CPAN::Meta::Spec> L<Module::Install> L<Carton>
+
+=back

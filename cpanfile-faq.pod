@@ -1,0 +1,148 @@
+=head1 NAME
+
+cpanfile-faq - cpanfile FAQ
+
+=head1 QUESTIONS
+
+=head2 Does cpanfile replace Makefile.PL or Build.PL?
+
+No, it doesn't. C<cpanfile> is a simpler way to declare CPAN
+dependencies, mainly to I<your application> rather than CPAN
+distributions.
+
+In fact, most CPAN distributions do not need to switch to C<cpanfile>
+unless they absolutely want to take advantage of some of the features
+(see below). This is considered a new extension for applications and
+installers.
+
+=head2 Why do we need yet another format?
+
+Here are some of the reasons that motivates the new L<cpanfile>
+format.
+
+=over 4
+
+=item Not everything is a CPAN distribution
+
+First of all, it is annoying to write Makefile.PL when what you
+develop is not a CPAN distirbution.
+
+It gets more painful when you develop a web application that you want
+to deploy on a different environment using version control system
+(such as cloud infrastructure), because it requires you to often
+commit the META file or C<inc/> directory (or even worse, botu) to a
+repository when your build script uses non-core modules such as
+L<Module::Install> or L<File::Copy::Recursive>.
+
+Many web application frameworks generate a boiler-plate C<Makefile.PL>
+for dependency declaration and to let you install dependencies with
+C<< cpanm --installdeps . >>, but that doesn't always mean they are
+meant to be installed. Things can be often much simpler if you run the
+application from the checkout directory.
+
+With L<cpanfile>, dependencies can be installed either globally or
+locally using supported tools such as L<cpanm> or L<carton>. Because
+C<cpanfile> lists all the dependencies of your entire application and
+will be updated over time, it makes perfect sense to commit the file
+to a version control system, and push the file for a deployment.
+
+=item More control for the dependencies analysis
+
+One of the limitation when I tried to implement a self-contained
+L<local::lib> library path feature for cpanminus was that the
+configuration phase runs the build file as a separate perl process,
+i.e. C<< perl Makefile.PL >>.
+
+This makes it so hard for the script to I<not> accidentally load any
+modules installed in the local C<site_perl> directory when determining
+the dynamic dependencies.
+
+For example, L<JSON> module has the following code (simplified):
+
+  if (!eval { require JSON::XS } && has_cc()) {
+      $args{PREREQ_PM}{'JSON::XS'} = 2;
+  }
+
+Similary, L<Any::Moose> has:
+
+  if (!eval { require Moose }) {
+      $args{PREREQ_PM}{Mouse} = '0.40';
+  }
+
+Because it uses C<eval require> and the build script runs as a
+separate perl process, whether you have the modules in question in
+your C<site_perl> directory affects the dependencies
+configuration, and the installer (cpanm) has no control over it.
+
+This eventually results in a library path that is I<not>
+self-contained and gives runtime errors because of missing
+dependencies.
+
+With C<cpanfile> format, dynamic dependencies based on the list of the
+modules can be declared like:
+
+  # FIXME
+  unless (has 'Moose') {
+      requires 'Mouse', '0.40';
+  }
+
+and installers can decide whether the module in question is installed
+in the target library path.
+
+=item Familiar DSL syntax
+
+This is a new file type, but the format and syntax isn't entirely
+new. The metadata it can declare is exactly a subset of "Prereqs" in
+L<CPAN Meta Spec|CPAN::Meta::Spec>, with some conditionals such as
+C<platform> and C<perl>.
+
+The syntax borrows a lot from L<Module::Install>. Module::Install is a
+great way to easily declare module metadata such as name, author and
+dependencies. L<cpanfile> format is simply to extract the dependencies
+into a separate file, which means most of the developers are familiar
+with the syntax.
+
+=item Complete CPAN Meta Spec v2 support
+
+C<cpanfile> basically allows you to declare L<CPAN::Meta::Spec>
+prerequisite specification using an easy Perl DSL syntax. This makes
+it easy to declare per-phase dependencies and newer version 2 features
+such as conflicts and version ranges.
+
+=back
+
+=head2 How can I start using C<cpanfile>?
+
+First of all, most distributions on CPAN are not required to update to
+this format.
+
+If your application currently uses C<Makefile.PL> etc. for dependency
+declaration because of the current toolchain implementation (e.g. C<<
+cpanm --installdeps . >>), you can upgrade to C<cpanfile> while
+keeping the build file based installation working for the backward
+compatibility.
+
+=over 4
+
+=item Module::Install
+
+Use L<Module::Install::Cpanfile> and replace C<requires>,
+C<test_requires> etc. with C<cpanfile>.
+
+=item ExtUtils::MakeMaker
+
+XXX 
+
+=item Module::Build
+
+XXX Module::Build::Cpanfile?
+
+=item Module::Build::Tiny
+
+XXX
+
+=item Dist::Zilla
+
+L<Dist::Zilla::Plugin::Cpanfile>
+
+=back
