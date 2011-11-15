@@ -30,7 +30,7 @@ develop is not a CPAN distirbution.
 It gets more painful when you develop a web application that you want
 to deploy on a different environment using version control system
 (such as cloud infrastructure), because it requires you to often
-commit the META file or C<inc/> directory (or even worse, botu) to a
+commit the META file or C<inc/> directory (or even worse, both) to a
 repository when your build script uses non-core modules such as
 L<Module::Install> or L<File::Copy::Recursive>.
 
