@@ -1,8 +1,8 @@
-package CPANfile;
+package CPAN::cpanfile;
 use strict;
 use warnings;
 use Cwd;
-use CPANfile::Environment ();
+use CPAN::cpanfile::Environment;
 
 sub new {
     my($class, $file) = @_;
@@ -21,7 +21,7 @@ sub parse {
     my $self = shift;
 
     my $file = Cwd::abs_path($self->{file});
-    $self->{result} = CPANfile::Environment::parse($file) or die $@;
+    $self->{result} = CPAN::cpanfile::Environment::parse($file) or die $@;
 }
 
 sub prereq {
@@ -41,18 +41,18 @@ __END__
 
 =head1 NAME
 
-CPANfile - Parse cpanfile
+CPAN::cpanfile - Parse cpanfile
 
 =head1 SYNOPSIS
 
-  use CPANfile;
+  use CPAN::cpanfile;
 
-  my $file = CPANfile->load("cpanfile");
+  my $file = CPAN::cpanfile->load("cpanfile");
   my $meta = $file->prereqs; # CPAN::Meta::Prereqs object
 
 =head1 DESCRIPTION
 
-CPANfile is a tool to handle L<cpanfile> format to load application
+CPAN::cpanfile is a tool to handle L<cpanfile> format to load application
 specific dependencies, not just for CPAN distributions.
 
 =head1 AUTHOR

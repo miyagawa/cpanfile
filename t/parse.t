@@ -1,5 +1,5 @@
 use strict;
-use CPANfile;
+use CPAN::cpanfile;
 use Test::More;
 use Cwd;
 use File::Basename qw(dirname);
@@ -12,7 +12,7 @@ chdir "t/samples";
 
 {
     eval {
-        my $file = CPANfile->load;
+        my $file = CPAN::cpanfile->load;
     };
     like $@, qr/No such file/;
 }
@@ -38,7 +38,7 @@ test_requires 'Test::Warn', 0.1;
 author_requires 'Module::Install', 0.99;
 FILE
 
-    my $file = CPANfile->load;
+    my $file = CPAN::cpanfile->load;
     my $prereq = $file->prereq;
 
     is_deeply $prereq->as_string_hash, {
