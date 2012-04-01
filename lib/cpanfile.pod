@@ -29,7 +29,7 @@ cpanfile - A format for describing CPAN dependencies for Perl applications
 
 =head1 VERSION
 
-v0.9.0
+0.9000
 
 =head1 DESCRIPTION  
 
