@@ -31,7 +31,7 @@ cpanfile - A format for describing CPAN dependencies for Perl applications
 
 v0.9.0
 
-=head1 DESCRIPTION  
+=head1 DESCRIPTION
 
 C<cpanfile> describes CPAN dependencies required to execute associated
 Perl code.
@@ -60,4 +60,4 @@ L<Gemfile|http://gembundler.com/man/gemfile.5.html> specification.
 
 L<CPAN::Meta::Spec> L<Module::Install> L<Carton>
 
-=back
+=cut
