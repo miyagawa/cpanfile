@@ -59,7 +59,7 @@ sub on {
     $code->()
 }
 
-sub os { die "TODO" }
+sub osname { die "TODO" }
 sub perl { die "TODO" }
 
 sub requires {
