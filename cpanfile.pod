@@ -59,5 +59,3 @@ L<Gemfile|http://gembundler.com/man/gemfile.5.html> specification.
 =head1 SEE ALSO
 
 L<CPAN::Meta::Spec> L<Module::Install> L<Carton>
-
-=back
