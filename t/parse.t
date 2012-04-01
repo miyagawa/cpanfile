@@ -5,11 +5,14 @@ use Cwd;
 use File::Basename qw(dirname);
 use t::Utils;
 
+eval { require CPAN::Meta::Prereqs; 1 }
+  or plan skip_all => "CPAN::Meta::Prereqs not found";
+
 chdir "t/samples";
 
 {
     eval {
-        my $file = CPANfile->new;
+        my $file = CPANfile->load;
     };
     like $@, qr/No such file/;
 }
@@ -35,7 +38,7 @@ test_requires 'Test::Warn', 0.1;
 author_requires 'Module::Install', 0.99;
 FILE
 
-    my $file = CPANfile->new;
+    my $file = CPANfile->load;
     my $prereq = $file->prereq;
 
     is_deeply $prereq->as_string_hash, {

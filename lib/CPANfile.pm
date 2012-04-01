@@ -6,7 +6,13 @@ use CPANfile::Environment ();
 
 sub new {
     my($class, $file) = @_;
-    my $self = bless { file => $file || "cpanfile" }, $class;
+    bless {}, $class;
+}
+
+sub load {
+    my($proto, $file) = @_;
+    my $self = ref $proto ? $proto : $proto->new;
+    $self->{file} = $file || "cpanfile";
     $self->parse;
     $self;
 }
@@ -41,7 +47,7 @@ CPANfile - Parse cpanfile
 
   use CPANfile;
 
-  my $file = CPANfile->new("cpanfile");
+  my $file = CPANfile->load("cpanfile");
   my $meta = $file->prereqs; # CPAN::Meta::Prereqs object
 
 =head1 DESCRIPTION
