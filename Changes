@@ -1,2 +1,5 @@
+0.9001  Tue Apr  3 04:30:31 CEST 2012
+        - Added t/samples in the directory so the test won't fail
+
 0.9000  Sun Apr  1 15:10:36 CEST 2012
         - Initial version
