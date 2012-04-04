@@ -60,4 +60,5 @@ L<Gemfile|http://gembundler.com/man/gemfile.5.html> specification.
 
 L<CPAN::Meta::Spec> L<Module::Install> L<Carton>
 
-=over
+=cut
+
