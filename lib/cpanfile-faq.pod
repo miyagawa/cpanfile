@@ -55,39 +55,10 @@ i.e. C<< perl Makefile.PL >>.
 
 This makes it so hard for the script to I<not> accidentally load any
 modules installed in the local C<site_perl> directory when determining
-the dynamic dependencies.
-
-For example, L<JSON> module has the following code (simplified):
-
-  if (!eval { require JSON::XS } && has_cc()) {
-      $args{PREREQ_PM}{'JSON::XS'} = 2;
-  }
-
-Similary, L<Any::Moose> has:
-
-  if (!eval { require Moose }) {
-      $args{PREREQ_PM}{Mouse} = '0.40';
-  }
-
-Because it uses C<eval require> and the build script runs as a
-separate perl process, whether you have the modules in question in
-your C<site_perl> directory affects the dependencies
-configuration, and the installer (cpanm) has no control over it.
-
-This eventually results in a library path that is I<not>
-self-contained and gives runtime errors because of missing
-dependencies.
-
-With C<cpanfile> format, dynamic dependencies based on the list of the
-modules can be declared like:
-
-  # FIXME
-  unless (has 'Moose') {
-      requires 'Mouse', '0.40';
-  }
-
-and installers can decide whether the module in question is installed
-in the target library path.
+the dynamic dependencies. With the recent evolution of CPAN installer
+ecosystem such as L<local::lib> support, it makes things much easier
+if installers figure out whether dependencies are installed, instead
+of by build tools such as L<Module::Install>.
 
 =item Familiar DSL syntax
 
@@ -122,27 +93,4 @@ cpanm --installdeps . >>), you can upgrade to C<cpanfile> while
 keeping the build file based installation working for the backward
 compatibility.
 
-=over 4
-
-=item Module::Install
-
-Use L<Module::Install::Cpanfile> and replace C<requires>,
-C<test_requires> etc. with C<cpanfile>.
-
-=item ExtUtils::MakeMaker
-
-XXX 
-
-=item Module::Build
-
-XXX Module::Build::Cpanfile?
-
-=item Module::Build::Tiny
-
-XXX
-
-=item Dist::Zilla
-
-L<Dist::Zilla::Plugin::Cpanfile>
-
-=back
+TBD: Support in other tools such as MakeMaker
