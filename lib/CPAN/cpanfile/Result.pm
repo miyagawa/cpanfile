@@ -1,5 +1,5 @@
-
 package CPAN::cpanfile::Result;
+use strict;
 
 sub new {
     bless {
