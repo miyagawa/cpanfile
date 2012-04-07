@@ -29,7 +29,11 @@ sub parse {
         join '', <$fh>;
     };
 
-    my $res = eval sprintf <<EVAL, $file_id++;
+    my($res, $err);
+
+    {
+        local $@;
+        $res = eval sprintf <<EVAL, $file_id++;
 package CPAN::cpanfile::Sandbox%d;
 my \$_result;
 no warnings;
@@ -39,8 +43,10 @@ $code;
 
 \$_result;
 EVAL
+        $err = $@;
+    }
 
-    if (my $err = $@ || $!) { die "Parsing $file failed: $err" };
+    if ($err) { die "Parsing $file failed: $err" };
 
     return $res;
 }
