@@ -8,8 +8,6 @@ use t::Utils;
 eval { require CPAN::Meta::Prereqs; 1 }
   or plan skip_all => "CPAN::Meta::Prereqs not found";
 
-chdir "t/samples";
-
 {
     eval {
         my $file = CPAN::cpanfile->load;

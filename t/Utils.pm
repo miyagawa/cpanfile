@@ -4,19 +4,25 @@ use base qw(Exporter);
 our @EXPORT = qw(write_cpanfile);
 
 sub write_cpanfile {
+    my $dir = "t/sample-" . rand(100000);
+    mkdir $dir;
+    chdir $dir;
+
     open my $fh, ">cpanfile" or die $!;
     print $fh @_;
 
-    return Remover->new("cpanfile");
+    return Remover->new($dir);
 }
 
 package
   Remover;
 sub new {
-    bless { file => $_[1] }, $_[0];
+    bless { dir => $_[1], file => $_[2] }, $_[0];
 }
 
 sub DESTROY {
-    unlink $_[0]->{file};
+    unlink 'cpanfile';
+    chdir "../..";
+    rmdir $_[0]->{dir};
 }
 

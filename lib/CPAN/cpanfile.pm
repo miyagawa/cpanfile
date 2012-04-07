@@ -4,7 +4,7 @@ use warnings;
 use Cwd;
 use CPAN::cpanfile::Environment;
 
-our $VERSION = '0.9001';
+our $VERSION = '0.9002';
 
 sub new {
     my($class, $file) = @_;

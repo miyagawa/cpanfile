@@ -6,6 +6,6 @@ lib/cpanfile-faq.pod
 lib/cpanfile.pod
 Makefile.PL
 MANIFEST			This list of files
+README.md
 t/parse.t
-t/samples/placeholder
 t/Utils.pm
