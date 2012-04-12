@@ -25,6 +25,8 @@ sub parse {
     $self->{result} = Module::CPANfile::Environment::parse($file) or die $@;
 }
 
+sub prereqs { shift->prereq }
+
 sub prereq {
     my $self = shift;
     require CPAN::Meta::Prereqs;
