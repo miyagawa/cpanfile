@@ -1,4 +1,4 @@
-package CPAN::cpanfile::Result;
+package Module::CPANfile::Result;
 use strict;
 
 sub new {

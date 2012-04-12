@@ -1,6 +1,6 @@
-package CPAN::cpanfile::Environment;
+package Module::CPANfile::Environment;
 use strict;
-use CPAN::cpanfile::Result;
+use Module::CPANfile::Result;
 
 my @bindings = qw(
     on requires recommends suggests conflicts
@@ -14,7 +14,7 @@ sub import {
     my($class, $result_ref) = @_;
     my $pkg = caller;
 
-    $$result_ref = CPAN::cpanfile::Result->new;
+    $$result_ref = Module::CPANfile::Result->new;
     for my $binding (@bindings) {
         no strict 'refs';
         *{"$pkg\::$binding"} = sub { $$result_ref->$binding(@_) };
@@ -34,10 +34,10 @@ sub parse {
     {
         local $@;
         $res = eval sprintf <<EVAL, $file_id++;
-package CPAN::cpanfile::Sandbox%d;
+package Module::CPANfile::Sandbox%d;
 my \$_result;
 no warnings;
-use CPAN::cpanfile::Environment \\\$_result;
+use Module::CPANfile::Environment \\\$_result;
 
 $code;
 

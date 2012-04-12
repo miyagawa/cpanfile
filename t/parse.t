@@ -1,5 +1,5 @@
 use strict;
-use CPAN::cpanfile;
+use Module::CPANfile;
 use Test::More;
 use Cwd;
 use File::Basename qw(dirname);
@@ -10,7 +10,7 @@ eval { require CPAN::Meta::Prereqs; 1 }
 
 {
     eval {
-        my $file = CPAN::cpanfile->load;
+        my $file = Module::CPANfile->load;
     };
     like $@, qr/No such file/;
 }
@@ -36,7 +36,7 @@ test_requires 'Test::Warn', 0.1;
 author_requires 'Module::Install', 0.99;
 FILE
 
-    my $file = CPAN::cpanfile->load;
+    my $file = Module::CPANfile->load;
     my $prereq = $file->prereq;
 
     is_deeply $prereq->as_string_hash, {

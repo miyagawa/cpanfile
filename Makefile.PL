@@ -1,8 +1,8 @@
 use ExtUtils::MakeMaker;
 
 WriteMakefile(
-    NAME => 'CPAN::cpanfile',
-    VERSION_FROM => 'lib/CPAN/cpanfile.pm',
+    NAME => 'Module::CPANfile',
+    VERSION_FROM => 'lib/Module/CPANfile.pm',
     ABSTRACT => 'A format for describing CPAN dependencies of Perl applications',
     CONFIGURE_REQUIRES => {
         'ExtUtils::MakeMaker' => 6.31,
