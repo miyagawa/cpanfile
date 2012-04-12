@@ -1,3 +1,6 @@
+0.9004  Thu Apr 12 18:31:59 JST 2012
+        - Renamed the distribution
+
 0.9003  Sat Apr  7 01:26:04 PDT 2012
         - Don't use $! in error checks because we don't open file there.
           This also caused issues in 5.8 where $! isn't often cleared
