@@ -50,7 +50,7 @@ Module::CPANfile - Parse cpanfile
   use Module::CPANfile;
 
   my $file = Module::CPANfile->load("cpanfile");
-  my $meta = $file->prereqs; # CPAN::Meta::Prereqs object
+  my $prereq = $file->prereq; # CPAN::Meta::Prereqs object
 
 =head1 DESCRIPTION
 
