@@ -10,10 +10,6 @@ cpanfile - A format for describing CPAN dependencies for Perl applications
   recommends 'JSON::XS', '2.0';
   conflicts 'JSON', '< 1.0';
 
-  osname 'MSWin32' => sub {
-      requires 'Win32::File';
-  };
-
   on 'test' => sub {
       requires 'Test::More', '>= 0.96, < 2.0';
       recommends 'Test::TCP', '1.12';
@@ -21,10 +17,6 @@ cpanfile - A format for describing CPAN dependencies for Perl applications
 
   on 'develop' => sub {
       recommends 'Devel::NYTProf';
-  };
-
-  perl '< v5.10' => sub {
-      requires 'Hash::Util::FieldHash::Compat';
   };
 
 =head1 VERSION
