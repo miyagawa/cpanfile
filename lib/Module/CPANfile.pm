@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Cwd;
 
-our $VERSION = '0.9006';
+our $VERSION = '0.9007';
 
 sub new {
     my($class, $file) = @_;
@@ -166,7 +166,7 @@ Module::CPANfile - Parse cpanfile
   use Module::CPANfile;
 
   my $file = Module::CPANfile->load("cpanfile");
-  my $prereq = $file->prereq; # CPAN::Meta::Prereqs object
+  my $prereqs = $file->prereqs; # CPAN::Meta::Prereqs object
 
 =head1 DESCRIPTION
 
