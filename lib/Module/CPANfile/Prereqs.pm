@@ -59,7 +59,11 @@ sub build_cpan_meta {
     my $prereq_spec = {};
     $self->prereq_each($identifier, sub {
         my $prereq = shift;
-        $prereq_spec->{$prereq->phase}{$prereq->type}{$prereq->module} = $prereq->requirement->version;
+        if (my $original = $prereq_spec->{$prereq->phase}{$prereq->type}{$prereq->module}) {
+            $prereq_spec->{$prereq->phase}{$prereq->type}{$prereq->module} = $original . ', ' . $prereq->requirement->version;
+        } else {
+            $prereq_spec->{$prereq->phase}{$prereq->type}{$prereq->module} = $prereq->requirement->version;
+        }
     });
 
     CPAN::Meta::Prereqs->new($prereq_spec);

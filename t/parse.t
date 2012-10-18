@@ -71,4 +71,36 @@ FILE
     };
 }
 
+{
+    my $r = write_cpanfile(<<FILE);
+requires 'Plack';
+requires 'Plack', '0.9970';
+requires 'Plack', '<= 1.0';
+requires 'Plack';
+FILE
+
+    my $file = Module::CPANfile->load;
+    my $prereq = $file->prereq;
+
+    is_deeply $prereq->as_string_hash, {
+        runtime => {
+            requires => { 'Plack' => '>= 0.9970, <= 1.0' },
+        },
+    };
+}
+
+{
+    my $r = write_cpanfile(<<FILE);
+requires 'Plack', '0.9970';
+requires 'Plack', '<= 0.8';
+FILE
+
+    my $file = Module::CPANfile->load;
+    eval {
+        my $prereq = $file->prereq;
+    };
+    like($@, qr/illegal requirements: minimum exceeds maximum/, 'Incompatible version ranges cause error');
+}
+
+
 done_testing;
