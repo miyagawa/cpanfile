@@ -184,10 +184,44 @@ Module::CPANfile - Parse cpanfile
   my $file = Module::CPANfile->load("cpanfile");
   my $prereqs = $file->prereqs; # CPAN::Meta::Prereqs object
 
+  $file->merge_meta('MYMETA.json');
+
 =head1 DESCRIPTION
 
 Module::CPANfile is a tool to handle L<cpanfile> format to load application
 specific dependencies, not just for CPAN distributions.
+
+=head1 METHODS
+
+=over 4
+
+=item load
+
+  $file = Module::CPANfile->load;
+  $file = Module::CPANfile->load('cpanfile');
+
+Load and parse a cpanfile. By default it tries to load C<cpanfile> in
+the current directory, unless you pass the path to its argument.
+
+=item prereqs
+
+Returns L<CPAN::Meta::Prereqs> object out of the parsed cpanfile.
+
+=item prereq_specs
+
+Returns a hash reference that should be passed to C<< CPAN::Meta::Prereqs->new >>.
+
+=item merge_meta
+
+  $file->merge_meta('META.yml');
+  $file->merge_meta('MYMETA.json', '2.0');
+
+Merge the effective prereqs with Meta speicifcation loaded from the
+given META file, using CPAN::Meta. You can specify the META spec
+version in the second argument, which defaults to 1.4 in case the
+given file is YAML, and 2 if it is JSON.
+
+=back
 
 =head1 AUTHOR
 
