@@ -1,8 +1,6 @@
 use strict;
 use Module::CPANfile;
 use Test::More;
-use Cwd;
-use File::Basename qw(dirname);
 use POSIX qw(locale_h);
 use t::Utils;
 
