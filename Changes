@@ -1,5 +1,10 @@
+Revision history for Perl extension Module::Install::CPANfile
+
+0.9008  Wed Jan 30 21:53:32 PST 2013
+        - Added merge_meta method to be used in Module::Install::CPANfile
+
 0.9007  Sat Apr 14 14:55:49 CST 2012
-        - Fixed documentations
+        - Fixed documentation
 
 0.9006  Fri Apr 13 07:30:33 JST 2012
         - Alias prereqs method to prereq
