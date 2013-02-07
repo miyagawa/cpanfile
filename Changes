@@ -1,5 +1,8 @@
 Revision history for Perl extension Module::Install::CPANfile
 
+0.9009  Thu Feb  7 09:24:11 PST 2013
+        - Fixed CPAN::Meta dependency in the test (Chris Weyl)
+
 0.9008  Wed Jan 30 21:53:32 PST 2013
         - Added merge_meta method to be used in Module::Install::CPANfile
 
