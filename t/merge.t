@@ -3,8 +3,11 @@ use Module::CPANfile;
 use Test::More;
 use t::Utils;
 
-eval { require CPAN::Meta::Prereqs; 1 }
-  or plan skip_all => "CPAN::Meta::Prereqs not found";
+eval {
+    require CPAN::Meta::Prereqs;
+    die unless $CPAN::Meta::Prereqs::VERSION >= 2.120921;
+    1;
+} or plan skip_all => "CPAN::Meta::Prereqs not found";
 
 {
     my $r = write_files(cpanfile => <<CPANFILE, 'META.json' => <<META);
