@@ -5,14 +5,10 @@ cpanfile - A format for describing CPAN dependencies for Perl applications
 # SYNOPSIS
 
     requires 'Catalyst', '5.8000';
-    requires 'CatalystX::Singleton', '>= 1.1000, < 2.000';
+    requires 'Catalyst::View::JSON', '>= 0.30, < 0.40';
 
     recommends 'JSON::XS', '2.0';
     conflicts 'JSON', '< 1.0';
-
-    osname 'MSWin32' => sub {
-        requires 'Win32::File';
-    };
 
     on 'test' => sub {
         requires 'Test::More', '>= 0.96, < 2.0';
@@ -21,10 +17,6 @@ cpanfile - A format for describing CPAN dependencies for Perl applications
 
     on 'develop' => sub {
         recommends 'Devel::NYTProf';
-    };
-
-    perl '< v5.10' => sub {
-        requires 'Hash::Util::FieldHash::Compat';
     };
 
 # VERSION
