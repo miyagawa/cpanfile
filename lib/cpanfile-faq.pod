@@ -25,7 +25,7 @@ format.
 =item Not everything is a CPAN distribution
 
 First of all, it is annoying to write Makefile.PL when what you
-develop is not a CPAN distirbution.
+develop is not a CPAN distribution.
 
 It gets more painful when you develop a web application that you want
 to deploy on a different environment using version control system
