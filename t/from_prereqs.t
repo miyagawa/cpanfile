@@ -30,9 +30,9 @@ on test => sub {
 };
 FILE
 
-    $file->save('cpanfile.new');
+    $file->save('cpanfile');
 
-    my $content = do { local $/; open my $in, 'cpanfile.new'; <$in> };
+    my $content = do { local $/; open my $in, 'cpanfile'; <$in> };
     is $content, $file->to_string;
 }
 
