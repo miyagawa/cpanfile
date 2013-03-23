@@ -1,0 +1,49 @@
+#!perl
+use strict;
+use warnings;
+use CPAN::Meta;
+use Module::CPANfile;
+
+sub get_mymeta {
+    for my $file (qw( MYMETA.json MYMETA.yml META.json META.yml )) {
+        next unless -r $file;
+        my $meta = eval { CPAN::Meta->load_file($file) };
+        return $meta if $meta;
+    }
+}
+
+my $meta = get_mymeta or die "Could not locate any META files\n";
+
+my $cpanfile = Module::CPANfile->from_prereqs($meta->effective_prereqs->as_string_hash);
+print $cpanfile->to_string;
+
+__END__
+
+=head1 NAME
+
+mymeta-cpanfile - Dump cpanfile out of (MY)META files
+
+=head1 SYNOPSIS
+
+  $ perl Makefile.PL # or Build.PL
+  $ mymeta-cpanfile > cpanfile
+
+=head1 DESCRIPTION
+
+This script reads prereqs metadata from MYMETA files in the current
+directory and prints C<cpanfile> that represents the prereqs. Useful
+when you want to migrate to using L<cpanfile> from existing
+C<Makefile.PL> or C<Build.PL> with dependency specification.
+
+This script is distributed with L<Module::CPANfile> since version 0.9021.
+
+=head1 AUTHOR
+
+Tatsuhiko Miyagawa
+
+=head1 SEE ALSO
+
+L<Module::CPANfile> L<cpanfile> L<App::mymeta_requires>
+
+=cut
+
