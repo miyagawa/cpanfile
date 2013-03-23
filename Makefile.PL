@@ -7,6 +7,7 @@ WriteMakefile(
     CONFIGURE_REQUIRES => {
         'ExtUtils::MakeMaker' => 6.31,
     },
+    EXE_FILES => [ 'script/mymeta-cpanfile' ],
     MIN_PERL_VERSION => '5.008001',
     AUTHOR => 'Tatsuhiko Miyagawa',
     LICENSE => "perl",
