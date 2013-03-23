@@ -106,7 +106,7 @@ use strict;
 
 my @bindings = qw(
     on requires recommends suggests conflicts
-    osname perl
+    osname
     configure_requires build_requires test_requires author_requires
 );
 
@@ -178,7 +178,6 @@ sub on {
 }
 
 sub osname { die "TODO" }
-sub perl { die "TODO" }
 
 sub requires {
     my($self, $module, $requirement) = @_;

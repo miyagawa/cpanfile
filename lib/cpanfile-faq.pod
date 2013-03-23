@@ -64,8 +64,7 @@ of by build tools such as L<Module::Install>.
 
 This is a new file type, but the format and syntax isn't entirely
 new. The metadata it can declare is exactly a subset of "Prereqs" in
-L<CPAN Meta Spec|CPAN::Meta::Spec>, with some conditionals such as
-C<platform> and C<perl>.
+L<CPAN Meta Spec|CPAN::Meta::Spec>.
 
 The syntax borrows a lot from L<Module::Install>. Module::Install is a
 great way to easily declare module metadata such as name, author and
