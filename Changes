@@ -1,5 +1,8 @@
 Revision history for Perl extension Module::Install::CPANfile
 
+0.9021  Sat Mar 23 09:11:46 PDT 2013
+        - added mymeta-cpanfile utility script for migration from Makefile.PL/Build.PL
+
 0.9020  Sat Mar 23 02:48:50 PDT 2013
         - Implemeneted from_prereqs, to_string and save utility methods,
           to allow creating a new cpanfile out of (MY)META files
