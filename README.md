@@ -1,53 +1,103 @@
 # NAME
 
-cpanfile - A format for describing CPAN dependencies for Perl applications
+Module::CPANfile - Parse cpanfile
 
 # SYNOPSIS
 
-    requires 'Catalyst', '5.8000';
-    requires 'Catalyst::View::JSON', '>= 0.30, < 0.40';
+    use Module::CPANfile;
 
-    recommends 'JSON::XS', '2.0';
-    conflicts 'JSON', '< 1.0';
+    my $file = Module::CPANfile->load("cpanfile");
+    my $prereqs = $file->prereqs; # CPAN::Meta::Prereqs object
 
-    on 'test' => sub {
-        requires 'Test::More', '>= 0.96, < 2.0';
-        recommends 'Test::TCP', '1.12';
-    };
+    $file->merge_meta('MYMETA.json');
 
-    on 'develop' => sub {
-        recommends 'Devel::NYTProf';
-    };
+# DESCRIPTION
 
-# VERSION
+Module::CPANfile is a tool to handle [cpanfile](http://search.cpan.org/perldoc?cpanfile) format to load application
+specific dependencies, not just for CPAN distributions.
 
-0.9000
+# METHODS
 
-# DESCRIPTION  
+- load
 
-`cpanfile` describes CPAN dependencies required to execute associated
-Perl code.
+        $file = Module::CPANfile->load;
+        $file = Module::CPANfile->load('cpanfile');
 
-Place the `cpanfile` in the root of the directory containing the
-associated code. For instance, in a Catalyst application, place the
-`cpanfile` in the same directory as `myapp.conf`.
+    Load and parse a cpanfile. By default it tries to load `cpanfile` in
+    the current directory, unless you pass the path to its argument.
 
-Tools supporting `cpanfile` format (e.g. [cpanm](http://search.cpan.org/perldoc?cpanm) and [carton](http://search.cpan.org/perldoc?carton)) will
-automatically detect the file and install dependencies for the code to
-run.
+- from\_prereqs
+
+        $file = Module::CPANfile->from_prereqs({
+          runtime => { requires => { DBI => '1.000' } },
+        });
+
+    Creates a new Module::CPANfile object from prereqs hash you can get
+    via [CPAN::Meta](http://search.cpan.org/perldoc?CPAN::Meta)'s `prereqs`, or [CPAN::Meta::Prereqs](http://search.cpan.org/perldoc?CPAN::Meta::Prereqs)'
+    `as_string_hash`.
+
+        # read MYMETA, then feed the prereqs to create Module::CPANfile
+        my $meta = CPAN::Meta->load_file('MYMETA.json');
+        my $file = Module::CPANfile->from_prereqs($meta->prereqs);
+
+        # load cpanfile, then recreate it with round-trip
+        my $file = Module::CPANfile->load('cpanfile');
+        $file = Module::CPANfile->from_prereqs($file->prereq_specs);
+                                          # or $file->prereqs->as_string_hash
+
+- prereqs
+
+    Returns [CPAN::Meta::Prereqs](http://search.cpan.org/perldoc?CPAN::Meta::Prereqs) object out of the parsed cpanfile.
+
+- prereq\_specs
+
+    Returns a hash reference that should be passed to `CPAN::Meta::Prereqs->new`.
+
+- to\_string($include\_empty)
+
+        $file->to_string;
+        $file->to_string(1);
+
+    Returns a canonical string (code) representation for cpanfile. Useful
+    if you want to convert [CPAN::Meta::Prereqs](http://search.cpan.org/perldoc?CPAN::Meta::Prereqs) to a new cpanfile.
+
+        # read MYMETA's prereqs and print cpanfile representation of it
+        my $meta = CPAN::Meta->load_file('MYMETA.json');
+        my $file = Module::CPANfile->from_prereqs($meta->prereqs);
+        print $file->to_sring;
+
+    By default, it omits the phase where there're no modules
+    registered. If you pass the argument of a true value, it will print
+    them as well.
+
+- save
+
+        $file->save('cpanfile');
+
+    Saves the currently loaded prereqs as a new `cpanfile` by calling
+    `to_string`. Beware __this method will overwrite the existing
+    cpanfile without any warning or backup__. Taking a backup or giving
+    warnings to users is a caller's responsibility.
+
+        # Read MYMETA.json and creates a new cpanfile
+        my $meta = CPAN::Meta->load_file('MYMETA.json');
+        my $file = Module::CPANfile->from_prereqs($meta->prereqs);
+        $file->save('cpanfile');
+
+- merge\_meta
+
+        $file->merge_meta('META.yml');
+        $file->merge_meta('MYMETA.json', '2.0');
+
+    Merge the effective prereqs with Meta speicifcation loaded from the
+    given META file, using CPAN::Meta. You can specify the META spec
+    version in the second argument, which defaults to 1.4 in case the
+    given file is YAML, and 2 if it is JSON.
 
 # AUTHOR
 
 Tatsuhiko Miyagawa
 
-# ACKNOWLEDGEMENTS
-
-The format (DSL syntax) is inspired by [Module::Install](http://search.cpan.org/perldoc?Module::Install) and
-[Module::Build::Functions](http://search.cpan.org/perldoc?Module::Build::Functions).
-
-`cpanfile` specification (this document) is based on Ruby's
-[Gemfile](http://gembundler.com/man/gemfile.5.html) specification.
-
 # SEE ALSO
 
-[CPAN::Meta::Spec](http://search.cpan.org/perldoc?CPAN::Meta::Spec) [Module::Install](http://search.cpan.org/perldoc?Module::Install) [Carton](http://search.cpan.org/perldoc?Carton)
+[cpanfile](http://search.cpan.org/perldoc?cpanfile), [CPAN::Meta](http://search.cpan.org/perldoc?CPAN::Meta), [CPAN::Meta::Spec](http://search.cpan.org/perldoc?CPAN::Meta::Spec)
