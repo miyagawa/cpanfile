@@ -12,7 +12,7 @@ eval { require CPAN::Meta::Prereqs; 1 }
     my $old_locale = setlocale(LC_ALL);
     setlocale(LC_ALL, 'C');
     eval {
-        my $file = Module::CPANfile->load;
+        my $file = Module::CPANfile->load('foo');
     };
     like $@, qr/No such file/;
     setlocale(LC_ALL, $old_locale);
