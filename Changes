@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+0.9023  2013-03-23 21:26:07 PDT
+        - mymeta-cpanfile: Added options to filter specific phases and types
+
 0.9022  2013-03-23 20:34:30 America/Los_Angeles
         - Convert to Milla
         - Made CPAN::Meta and ::Prereqs a hard requirement than runtime optional
