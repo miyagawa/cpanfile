@@ -1,4 +1,7 @@
-Revision history for Perl extension Module::Install::CPANfile
+Revision history for Module::Install::CPANfile
+
+{{$NEXT}}
+        - Convert to Milla
 
 0.9021  Sat Mar 23 09:11:46 PDT 2013
         - added mymeta-cpanfile utility script for migration from Makefile.PL/Build.PL

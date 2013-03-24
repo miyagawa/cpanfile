@@ -1,0 +1,48 @@
+{
+   "abstract" : "Parse cpanfile",
+   "author" : [
+      "Tatsuhiko Miyagawa <miyagawa@bulknews.net>"
+   ],
+   "dynamic_config" : 0,
+   "generated_by" : "Dist::Zilla version 4.300031, CPAN::Meta::Converter version 2.120921",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "Module-CPANfile",
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "Module::Build::Tiny" : "0.013"
+         }
+      },
+      "develop" : {
+         "requires" : {
+            "Test::Pod" : "1.41"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "CPAN::Meta" : "2.12091",
+            "CPAN::Meta::Prereqs" : "2.12091"
+         }
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "bugtracker" : {
+         "web" : "https://github.com/miyagawa/cpanfile/issues"
+      },
+      "homepage" : "https://github.com/miyagawa/cpanfile",
+      "repository" : {
+         "type" : "git",
+         "url" : "https://github.com/miyagawa/cpanfile.git",
+         "web" : "https://github.com/miyagawa/cpanfile"
+      }
+   },
+   "version" : "0.9021"
+}
+
