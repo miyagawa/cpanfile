@@ -1,6 +1,8 @@
 Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
+
+0.9022    2013-03-23 20:34:30 America/Los_Angeles
         - Convert to Milla
 
 0.9021  Sat Mar 23 09:11:46 PDT 2013

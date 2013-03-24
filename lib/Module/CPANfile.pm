@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Cwd;
 
-our $VERSION = '0.9021';
+our $VERSION = '0.9022';
 
 sub new {
     my($class, $file) = @_;
@@ -336,5 +336,3 @@ Tatsuhiko Miyagawa
 L<cpanfile>, L<CPAN::Meta>, L<CPAN::Meta::Spec>
 
 =cut
-
-

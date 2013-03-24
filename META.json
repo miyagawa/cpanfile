@@ -31,7 +31,7 @@
          }
       }
    },
-   "release_status" : "stable",
+   "release_status" : "testing",
    "resources" : {
       "bugtracker" : {
          "web" : "https://github.com/miyagawa/cpanfile/issues"
@@ -43,6 +43,6 @@
          "web" : "https://github.com/miyagawa/cpanfile"
       }
    },
-   "version" : "0.9021"
+   "version" : "0.9022"
 }
 
