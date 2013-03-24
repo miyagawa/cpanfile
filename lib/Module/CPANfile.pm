@@ -92,6 +92,7 @@ sub to_string {
             }
         }
 
+        $phase_code .= "\n" unless $requirements;
         $phase_code .= "};\n" unless $phase eq 'runtime';
 
         $code .= $phase_code . "\n" if $requirements or $include_empty;
