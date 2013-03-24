@@ -1,5 +1,6 @@
 META.yml
 MYMETA.*
+Makefile
 *~
 .*
 /Module-CPANfile-*
