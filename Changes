@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+0.9024  2013-03-23 21:29:41 PDT
+        - Make it non-trial
+
 0.9023  2013-03-23 21:26:07 PDT
         - mymeta-cpanfile: Added options to filter specific phases and types
 
