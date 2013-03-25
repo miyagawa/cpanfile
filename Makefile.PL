@@ -16,14 +16,16 @@ my %WriteMakefileArgs = (
     "ExtUtils::MakeMaker" => "6.30"
   },
   "DISTNAME" => "Module-CPANfile",
-  "EXE_FILES" => [],
+  "EXE_FILES" => [
+    "script/mymeta-cpanfile"
+  ],
   "LICENSE" => "perl",
   "NAME" => "Module::CPANfile",
   "PREREQ_PM" => {
     "CPAN::Meta" => "2.12091",
     "CPAN::Meta::Prereqs" => "2.12091"
   },
-  "VERSION" => "0.9024",
+  "VERSION" => "0.9025",
   "test" => {
     "TESTS" => "t/*.t"
   }

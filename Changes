@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+0.9025  2013-03-24 23:27:57 PDT
+        - rebuild package with new Milla to support script
+
 0.9024  2013-03-23 21:29:41 PDT
         - Make it non-trial
 
