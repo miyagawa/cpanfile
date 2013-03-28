@@ -4,16 +4,17 @@ cpanfile-faq - cpanfile FAQ
 
 =head1 QUESTIONS
 
-=head2 Does cpanfile replace Makefile.PL or Build.PL?
+=head2 Does cpanfile replace Makefile.PL/Build.PL or META.yml/json?
 
 No, it doesn't. C<cpanfile> is a simpler way to declare CPAN
 dependencies, mainly to I<your application> rather than CPAN
-distributions.
+distributions. It can also be used as a format to manage and express
+CPAN dependencies (prereqs) for your module upon authoring modules.
 
-In fact, most CPAN distributions do not need to switch to C<cpanfile>
-unless they absolutely want to take advantage of some of the features
-(see below). This is considered a new extension for applications and
-installers.
+CPAN distributions do not need to B<switch> to C<cpanfile>, but
+you can certainly manage the dependencies in C<cpanfile>, then
+export them into C<META.json> files when shipping to CPAN, using
+tools such as L<Dist::Milla> or L<Module::Install::CPANfile>
 
 =head2 Why do we need yet another format?
 
@@ -24,8 +25,9 @@ format.
 
 =item Not everything is a CPAN distribution
 
-First of all, it is annoying to write Makefile.PL when what you
-develop is not a CPAN distribution.
+First of all, it is annoying to write (a dummy) C<Makefile.PL> when
+what you develop is not a CPAN distribution, just so that installation
+like C<cpanm --installdeps .> would work.
 
 It gets more painful when you develop a web application that you want
 to deploy on a different environment using version control system
@@ -41,7 +43,7 @@ meant to be installed. Things can be often much simpler if you run the
 application from the checkout directory.
 
 With L<cpanfile>, dependencies can be installed either globally or
-locally using supported tools such as L<cpanm> or L<carton>. Because
+locally using supported tools such as L<cpanm> or L<Carton>. Because
 C<cpanfile> lists all the dependencies of your entire application and
 will be updated over time, it makes perfect sense to commit the file
 to a version control system, and push the file for a deployment.
@@ -92,4 +94,39 @@ cpanm --installdeps . >>), you can upgrade to C<cpanfile> while
 keeping the build file based installation working for the backward
 compatibility.
 
-TBD: Support in other tools such as MakeMaker
+If you are an author of CPAN module and want to manage CPAN module
+prerequisites using C<cpanfile> you can use one of the following
+tools:
+
+=over 4
+
+=item Dist::Milla
+
+L<Dist::Milla> is a profile for L<Dist::Zilla> that has a C<cpanfile>
+support to declare dependendies for your module.
+
+=item Dist::Zilla
+
+L<Dist::Zilla::Plugin::Prereqs::FromCPANfile> provides a way to merge
+dependencies declared in C<cpanfile> into META files as well as build
+files. You can combine them using other prerequisite scanners like
+C<AutoPrereqs>.
+
+=item Module::Install
+
+L<Module::Install::CPANfile> provides a C<cpanfile> DSL that reads
+C<cpanfile> to merge prerequisites when dumping C<MYMETA> files upon
+installation.
+
+=item Module::Build
+
+L<Module::Build::Pluggable::CPANfile> merges C<cpanfile> dependencies
+from C<Build.PL> when dumping out MYMETA information.
+
+=item ExtUtils::MakeMaker
+
+L<ExtUtils::MakeMaker> has no direct support for cpanfile yet, but you
+could use L<Module::CPANfile>'s C<merge_meta> method to update
+C<MYMETA.json> files with the contents in C<cpanfile>
+
+=back
