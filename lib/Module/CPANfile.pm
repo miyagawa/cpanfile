@@ -149,7 +149,11 @@ EVAL
         $err = $@;
     }
 
-    if ($err) { die "Parsing $file failed: $err" };
+    if ($err) {
+        my $line_diff = 5;
+        $err =~ s/line (\d*),/sprintf('line %d,', $1 - $line_diff)/e;
+        die "Parsing $file failed: $err";
+    }
 
     return $res;
 }
