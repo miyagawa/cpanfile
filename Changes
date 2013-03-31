@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+0.9027  2013-03-31 12:45:10 PDT
+        - Improved error message shows filename and line number
+
 0.9026  2013-03-28 12:07:27 PDT
         - Updated FAQ to mention tools that support cpanfile
 

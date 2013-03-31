@@ -4,7 +4,7 @@
       "Tatsuhiko Miyagawa <miyagawa@bulknews.net>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Milla version v0.9.1, Dist::Zilla version 4.300031, CPAN::Meta::Converter version 2.130870",
+   "generated_by" : "Dist::Milla version v0.9.3, Dist::Zilla version 4.300032, CPAN::Meta::Converter version 2.130880",
    "license" : [
       "perl_5"
    ],
@@ -13,6 +13,16 @@
       "version" : "2"
    },
    "name" : "Module-CPANfile",
+   "no_index" : {
+      "directory" : [
+         "t",
+         "xt",
+         "inc",
+         "share",
+         "eg",
+         "examples"
+      ]
+   },
    "prereqs" : {
       "configure" : {
          "requires" : {
@@ -46,6 +56,6 @@
          "web" : "https://github.com/miyagawa/cpanfile"
       }
    },
-   "version" : "0.9026"
+   "version" : "0.9027"
 }
 
