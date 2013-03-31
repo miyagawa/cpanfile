@@ -1,9 +1,6 @@
 use strict;
 use Test::More;
 
-eval { require CPAN::Meta::Prereqs; CPAN::Meta::Prereqs->VERSION(2.120921); 1 }
-  or plan skip_all => "CPAN::Meta::Prereqs not found";
-
 use Module::CPANfile;
 use t::Utils;
 

@@ -4,9 +4,6 @@ use Test::More;
 use POSIX qw(locale_h);
 use t::Utils;
 
-eval { require CPAN::Meta::Prereqs; 1 }
-  or plan skip_all => "CPAN::Meta::Prereqs not found";
-
 {
     # Use the traditional UNIX system locale to check the error message string.
     my $old_locale = setlocale(LC_ALL);
