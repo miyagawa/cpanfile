@@ -17,6 +17,15 @@ use t::Utils;
 
 {
     my $r = write_cpanfile(<<FILE);
+foo();
+FILE
+    eval { Module::CPANfile->load };
+    like $@, qr/cpanfile line 1/;
+}
+
+
+{
+    my $r = write_cpanfile(<<FILE);
 configure_requires 'ExtUtils::MakeMaker', 5.5;
 
 requires 'DBI';

@@ -142,6 +142,7 @@ no warnings;
 my \$_result;
 BEGIN { import Module::CPANfile::Environment \\\$_result };
 
+# line 1 "$file"
 $code;
 
 \$_result;
