@@ -66,4 +66,21 @@ FILE
     };
 }
 
+{
+    my $die;
+    local $SIG{__DIE__} = sub { $die = $_[0] };
+
+    my $r = write_cpanfile(<<FILE);
+configure_requires 'ExtUtils::MakeMaker', 5.5;
+
+requires 'DBI';
+requires 'Plack', '0.9970';
+ILLEGAL  'Moose', '< 0.8';
+FILE
+
+    eval { my $file = Module::CPANfile->load };
+
+    like $die, qr/failed: syntax error at \(eval \d+\) line 5,/;
+}
+
 done_testing;
