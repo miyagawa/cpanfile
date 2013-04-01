@@ -42,6 +42,11 @@
             "CPAN::Meta" : "2.12091",
             "CPAN::Meta::Prereqs" : "2.12091"
          }
+      },
+      "test" : {
+         "requires" : {
+            "Test::More" : "0.86"
+         }
       }
    },
    "release_status" : "stable",
