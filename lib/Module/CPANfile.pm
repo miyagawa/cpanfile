@@ -244,28 +244,41 @@ sub feature {
 
 sub osname { die "TODO" }
 
+sub requirement_for {
+    my ($self, $module, @args) = @_;
+
+    my $requirement = 0;
+    $requirement = shift @args if @args % 2;
+
+    return Module::CPANfile::Requirement->new(
+        name    => $module,
+        version => $requirement,
+        @args,
+    );
+}
+
 sub requires {
-    my($self, $module, $requirement) = @_;
+    my($self, $module, @args) = @_;
     ($self->{feature} ? $self->{feature}{spec} : $self->{spec})
-      ->{$self->{phase}}{requires}{$module} = $requirement || 0;
+      ->{$self->{phase}}{requires}{$module} = $self->requirement_for($module, @args);
 }
 
 sub recommends {
-    my($self, $module, $requirement) = @_;
+    my($self, $module, @args) = @_;
     ($self->{feature} ? $self->{feature}{spec} : $self->{spec})
-      ->{$self->{phase}}{recommends}{$module} = $requirement || 0;
+      ->{$self->{phase}}{recommends}{$module} = $self->requirement_for($module, @args);
 }
 
 sub suggests {
-    my($self, $module, $requirement) = @_;
+    my($self, $module, @args) = @_;
     ($self->{feature} ? $self->{feature}{spec} : $self->{spec})
-      ->{$self->{phase}}{suggests}{$module} = $requirement || 0;
+      ->{$self->{phase}}{suggests}{$module} = $self->requirement_for($module, @args);
 }
 
 sub conflicts {
-    my($self, $module, $requirement) = @_;
+    my($self, $module, @args) = @_;
     ($self->{feature} ? $self->{feature}{spec} : $self->{spec})
-      ->{$self->{phase}}{conflicts}{$module} = $requirement || 0;
+      ->{$self->{phase}}{conflicts}{$module} = $self->requirement_for($module, @args);
 }
 
 # Module::Install compatible shortcuts
@@ -289,6 +302,41 @@ sub author_requires {
     my($self, @args) = @_;
     $self->on(develop => sub { $self->requires(@args) });
 }
+
+package Module::CPANfile::Requirement;
+use strict;
+use overload '""' => \&as_string, fallback => 1;
+
+sub as_string { shift->{version} }
+
+sub as_hashref {
+    my $self = shift;
+    return +{ %$self };
+}
+
+sub new {
+    my ($class, %args) = @_;
+
+    # requires 'Plack';
+    # requires 'Plack', '0.9970';
+    # requires 'Plack', git => 'git://github.com/plack/Plack.git', rev => '0.9970';
+    # requires 'Plack', '0.9970', git => 'git://github.com/plack/Plack.git', rev => '0.9970';
+
+    $args{version} ||= 0;
+
+    bless +{
+        name    => $args{name},
+        version => $args{version},
+        (exists $args{git} ? (git => $args{git}) : ()),
+        (exists $args{rev} ? (rev => $args{rev}) : ()),
+    }, $class;
+}
+
+sub name    { shift->{name} }
+sub version { shift->{version} }
+
+sub git { shift->{git} }
+sub rev { shift->{rev} }
 
 package Module::CPANfile;
 
