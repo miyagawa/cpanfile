@@ -307,6 +307,9 @@ Module::CPANfile - Parse cpanfile
   my $file = Module::CPANfile->load("cpanfile");
   my $prereqs = $file->prereqs; # CPAN::Meta::Prereqs object
 
+  my @features = $file->features; # CPAN::Meta::Feature objects
+  my $merged_prereqs = $file->prereqs_with(@identifiers); # CPAN::Meta::Prereqs
+
   $file->merge_meta('MYMETA.json');
 
 =head1 DESCRIPTION
@@ -352,6 +355,15 @@ Returns L<CPAN::Meta::Prereqs> object out of the parsed cpanfile.
 =item prereq_specs
 
 Returns a hash reference that should be passed to C<< CPAN::Meta::Prereqs->new >>.
+
+=item features
+
+Returns a list of features available in the cpanfile as L<CPAN::Meta::Feature>.
+
+=item prereqs_with(@identifiers)
+
+Retuens L<CPAN::Meta::Prereqs> object, with merged prereqs for
+features identified with the C<@identifiers>.
 
 =item to_string($include_empty)
 
