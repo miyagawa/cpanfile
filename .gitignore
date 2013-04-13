@@ -2,7 +2,6 @@ META.yml
 MYMETA.*
 Makefile
 *~
-.*
 /Module-CPANfile-*
 /.build
 !META.json
