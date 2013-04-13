@@ -242,6 +242,11 @@ use overload '""' => \&as_string, fallback => 1;
 
 sub as_string { shift->{version} }
 
+sub as_hashref {
+    my $self = shift;
+    return +{ %$self };
+}
+
 sub new {
     my ($class, %args) = @_;
 
@@ -253,14 +258,20 @@ sub new {
     # and
     # requires 'git://github.com/plack/Plack.git';
 
-    $args{version} ||= 0;
+    my ($name, $version, $git, $revision) = @args{qw/ name version git revision /};
+    $version ||= 0;
 
-    if ($args{name} =~ /(?:^git:|\.git(?:@.+)?$)/i) {
-        ($args{name}, $args{revision}) = split /(?<=\.git)@/i, $args{name}, 2;
-        $args{git} = $args{name};
+    if ($name =~ /(?:^git:|\.git(?:@.+)?$)/i) {
+        ($name, $revision) = split /(?<=\.git)@/i, $name, 2;
+        $git = $name;
     }
 
-    bless \%args, $class;
+    bless +{
+        name    => $name,
+        version => $version,
+        (defined $git      ? (git      => $git)      : ()),
+        (defined $revision ? (revision => $revision) : ()),
+    }, $class;
 }
 
 package Module::CPANfile;
