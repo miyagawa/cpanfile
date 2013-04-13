@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+0.9028  2013-04-14 01:27:29 JST
+        - Add new 'feature' DSL and features support for CPAN::Meta::Feature
+
 0.9027  2013-03-31 12:45:10 PDT
         - Improved error message shows filename and line number
 

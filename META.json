@@ -1,10 +1,10 @@
 {
    "abstract" : "Parse cpanfile",
    "author" : [
-      "Tatsuhiko Miyagawa <miyagawa@bulknews.net>"
+      "Tatsuhiko Miyagawa"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Milla version v0.9.3, Dist::Zilla version 4.300032, CPAN::Meta::Converter version 2.130880",
+   "generated_by" : "Dist::Milla version v1.0.0, Dist::Zilla version 4.300034, CPAN::Meta::Converter version 2.130880",
    "license" : [
       "perl_5"
    ],
@@ -61,6 +61,10 @@
          "web" : "https://github.com/miyagawa/cpanfile"
       }
    },
-   "version" : "0.9027"
+   "version" : "0.9028",
+   "x_contributors" : [
+      "Masahiro Honma <hiratara@cpan.org>",
+      "Michiel Beijen <michiel.beijen@gmail.com>"
+   ]
 }
 

@@ -9,6 +9,9 @@ Module::CPANfile - Parse cpanfile
     my $file = Module::CPANfile->load("cpanfile");
     my $prereqs = $file->prereqs; # CPAN::Meta::Prereqs object
 
+    my @features = $file->features; # CPAN::Meta::Feature objects
+    my $merged_prereqs = $file->prereqs_with(@identifiers); # CPAN::Meta::Prereqs
+
     $file->merge_meta('MYMETA.json');
 
 # DESCRIPTION
@@ -52,6 +55,15 @@ specific dependencies, not just for CPAN distributions.
 - prereq\_specs
 
     Returns a hash reference that should be passed to `CPAN::Meta::Prereqs->new`.
+
+- features
+
+    Returns a list of features available in the cpanfile as [CPAN::Meta::Feature](http://search.cpan.org/perldoc?CPAN::Meta::Feature).
+
+- prereqs\_with(@identifiers)
+
+    Retuens [CPAN::Meta::Prereqs](http://search.cpan.org/perldoc?CPAN::Meta::Prereqs) object, with merged prereqs for
+    features identified with the `@identifiers`.
 
 - to\_string($include\_empty)
 
