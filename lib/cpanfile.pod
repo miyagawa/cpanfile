@@ -19,9 +19,13 @@ cpanfile - A format for describing CPAN dependencies for Perl applications
       recommends 'Devel::NYTProf';
   };
 
+  feature 'sqlite', 'SQLite support' => sub {
+      recommends 'DBD::SQLite';
+  };
+
 =head1 VERSION
 
-0.9000
+0.9100
 
 =head1 DESCRIPTION  
 
