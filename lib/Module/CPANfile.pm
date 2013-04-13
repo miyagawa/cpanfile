@@ -322,23 +322,9 @@ sub new {
     # requires 'Plack', git => 'git://github.com/plack/Plack.git', revision => '0.9970';
     # requires 'Plack', '0.9970', git => 'git://github.com/plack/Plack.git', revision => '0.9970';
 
-    # and
-    # requires 'git://github.com/plack/Plack.git';
+    $args{version} ||= 0;
 
-    my ($name, $version, $git, $revision) = @args{qw/ name version git revision /};
-    $version ||= 0;
-
-    if ($name =~ /(?:^git:|\.git(?:@.+)?$)/i) {
-        ($name, $revision) = split /(?<=\.git)@/i, $name, 2;
-        $git = $name;
-    }
-
-    bless +{
-        name    => $name,
-        version => $version,
-        (defined $git      ? (git      => $git)      : ()),
-        (defined $revision ? (revision => $revision) : ()),
-    }, $class;
+    bless +{ %args }, $class;
 }
 
 package Module::CPANfile;
