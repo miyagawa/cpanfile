@@ -181,24 +181,37 @@ sub on {
 
 sub osname { die "TODO" }
 
+sub requirement_for {
+    my ($self, $module, @args) = @_;
+
+    my $requirement = 0;
+    $requirement = shift @args if @args % 2;
+
+    return Module::CPANfile::Requirement->new(
+        name    => $module,
+        version => $requirement,
+        @args,
+    );
+}
+
 sub requires {
-    my($self, $module, $requirement) = @_;
-    $self->{spec}{$self->{phase}}{requires}{$module} = $requirement || 0;
+    my($self, $module, @args) = @_;
+    $self->{spec}{$self->{phase}}{requires}{$module} = $self->requirement_for($module, @args);
 }
 
 sub recommends {
-    my($self, $module, $requirement) = @_;
-    $self->{spec}->{$self->{phase}}{recommends}{$module} = $requirement || 0;
+    my($self, $module, @args) = @_;
+    $self->{spec}{$self->{phase}}{recommends}{$module} = $self->requirement_for($module, @args);
 }
 
 sub suggests {
-    my($self, $module, $requirement) = @_;
-    $self->{spec}->{$self->{phase}}{suggests}{$module} = $requirement || 0;
+    my($self, $module, @args) = @_;
+    $self->{spec}{$self->{phase}}{suggests}{$module} = $self->requirement_for($module, @args);
 }
 
 sub conflicts {
-    my($self, $module, $requirement) = @_;
-    $self->{spec}->{$self->{phase}}{conflicts}{$module} = $requirement || 0;
+    my($self, $module, @args) = @_;
+    $self->{spec}{$self->{phase}}{conflicts}{$module} = $self->requirement_for($module, @args);
 }
 
 # Module::Install compatible shortcuts
@@ -221,6 +234,33 @@ sub test_requires {
 sub author_requires {
     my($self, @args) = @_;
     $self->on(develop => sub { $self->requires(@args) });
+}
+
+package Module::CPANfile::Requirement;
+use strict;
+use overload '""' => \&as_string, fallback => 1;
+
+sub as_string { shift->{version} }
+
+sub new {
+    my ($class, %args) = @_;
+
+    # requires 'Plack';
+    # requires 'Plack', '0.9970';
+    # requires 'Plack', git => 'git://github.com/plack/Plack.git', revision => '0.9970';
+    # requires 'Plack', '0.9970', git => 'git://github.com/plack/Plack.git', revision => '0.9970';
+
+    # and
+    # requires 'git://github.com/plack/Plack.git';
+
+    $args{version} ||= 0;
+
+    if ($args{name} =~ /(?:^git:|\.git(?:@.+)?$)/i) {
+        ($args{name}, $args{revision}) = split /(?<=\.git)@/i, $args{name}, 2;
+        $args{git} = $args{name};
+    }
+
+    bless \%args, $class;
 }
 
 package Module::CPANfile;
