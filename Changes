@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+0.9030  2013-04-14 17:05:46 JST
+        - Fixed a bug where prereqs_with with an empty feature list causes an exception
+
 0.9029  2013-04-14 13:05:30 JST
         - Support EXPERIMENTAL git URL parsing (ikasam_a)
         - Allow feature DSL to omit description

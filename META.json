@@ -61,7 +61,7 @@
          "web" : "https://github.com/miyagawa/cpanfile"
       }
    },
-   "version" : "0.9029",
+   "version" : "0.9030",
    "x_contributors" : [
       "Masahiro Honma <hiratara@cpan.org>",
       "Michiel Beijen <michiel.beijen@gmail.com>",
