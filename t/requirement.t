@@ -1,19 +1,7 @@
 use strict;
 use Module::CPANfile;
 use Test::More;
-use POSIX qw(locale_h);
 use t::Utils;
-
-{
-    # Use the traditional UNIX system locale to check the error message string.
-    my $old_locale = setlocale(LC_ALL);
-    setlocale(LC_ALL, 'C');
-    eval {
-        my $file = Module::CPANfile->load('foo');
-    };
-    like $@, qr/No such file/;
-    setlocale(LC_ALL, $old_locale);
-}
 
 subtest 'full set' => sub {
     my $r = write_cpanfile(<<FILE);
