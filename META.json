@@ -45,7 +45,7 @@
       },
       "test" : {
          "requires" : {
-            "Test::More" : "0.86"
+            "Test::More" : "0.88"
          }
       }
    },
@@ -61,10 +61,11 @@
          "web" : "https://github.com/miyagawa/cpanfile"
       }
    },
-   "version" : "0.9028",
+   "version" : "0.9029",
    "x_contributors" : [
       "Masahiro Honma <hiratara@cpan.org>",
-      "Michiel Beijen <michiel.beijen@gmail.com>"
+      "Michiel Beijen <michiel.beijen@gmail.com>",
+      "ikasam_a <masaki.nakagawa@gmail.com>"
    ]
 }
 

@@ -2,6 +2,11 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+0.9029  2013-04-14 13:05:30 JST
+        - Support EXPERIMENTAL git URL parsing (ikasam_a)
+        - Allow feature DSL to omit description
+        - Add better error messages for feature syntax errors
+
 0.9028  2013-04-14 01:27:29 JST
         - Add new 'feature' DSL and features support for CPAN::Meta::Feature
 

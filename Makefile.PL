@@ -26,9 +26,9 @@ my %WriteMakefileArgs = (
     "CPAN::Meta::Prereqs" => "2.12091"
   },
   "TEST_REQUIRES" => {
-    "Test::More" => "0.86"
+    "Test::More" => "0.88"
   },
-  "VERSION" => "0.9028",
+  "VERSION" => "0.9029",
   "test" => {
     "TESTS" => "t/*.t"
   }
