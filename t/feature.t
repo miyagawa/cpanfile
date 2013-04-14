@@ -60,6 +60,12 @@ FILE
         like $@, qr/Unknown feature 'foobar'/;
     }
 
+    {
+        # no features, it's ok
+        eval { my $prereqs = $cpanfile->prereqs_with() };
+        ok !$@, $@;
+    }
+
     like $cpanfile->to_string, qr/feature/;
 }
 

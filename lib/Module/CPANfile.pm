@@ -68,7 +68,7 @@ sub prereqs_with {
     my $prereqs = $self->prereqs;
     my @others = map { $self->feature($_)->prereqs } @feature_identifiers;
 
-    $prereqs->with_merged_prereqs(@others);
+    $prereqs->with_merged_prereqs(\@others);
 }
 
 sub prereq {
