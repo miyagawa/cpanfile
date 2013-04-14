@@ -9,6 +9,22 @@ on test => sub {
   requires 'Test::More', '0.90';
 };
 
+feature 'sqlite' => sub {
+  on runtime => sub { requires 'DBD::SQLite' },
+};
+FILE
+    my $cpanfile = Module::CPANfile->load;
+    my @features = $cpanfile->features;
+    is $features[0]->identifier, 'sqlite';
+    is $features[0]->description, 'sqlite';
+}
+
+{
+    my $r = write_cpanfile(<<FILE);
+on test => sub {
+  requires 'Test::More', '0.90';
+};
+
 feature 'sqlite', 'SQLite support' => sub {
   on runtime => sub { requires 'DBD::SQLite' },
 };

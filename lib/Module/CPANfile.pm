@@ -44,10 +44,10 @@ sub from_prereqs {
 
 sub features {
     my $self = shift;
-    map $self->feature_for($_), keys %{$self->{result}{features}};
+    map $self->feature($_), keys %{$self->{result}{features}};
 }
 
-sub feature_for {
+sub feature {
     my($self, $identifier) = @_;
 
     my $data = $self->{result}{features}{$identifier}
@@ -66,7 +66,7 @@ sub prereqs_with {
     my($self, @feature_identifiers) = @_;
 
     my $prereqs = $self->prereqs;
-    my @others = map { $self->feature_for($_)->prereqs } @feature_identifiers;
+    my @others = map { $self->feature($_)->prereqs } @feature_identifiers;
 
     $prereqs->with_merged_prereqs(@others);
 }
@@ -237,6 +237,17 @@ sub on {
 
 sub feature {
     my($self, $identifier, $description, $code) = @_;
+
+    # shortcut: feature identifier => sub { ... }
+    if (@_ == 3 && ref($description) eq 'CODE') {
+        $code = $description;
+        $description = $identifier;
+    }
+
+    unless (ref $description eq '' && ref $code eq 'CODE') {
+        Carp::croak("Usage: feature 'identifier', 'Description' => sub { ... }");
+    }
+
     local $self->{feature} = $self->{features}{$identifier}
       = { identifier => $identifier, description => $description, spec => {} };
     $code->();
