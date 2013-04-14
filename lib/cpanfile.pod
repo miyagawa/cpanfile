@@ -11,17 +11,21 @@ cpanfile - A format for describing CPAN dependencies for Perl applications
   conflicts 'JSON', '< 1.0';
 
   on 'test' => sub {
-      requires 'Test::More', '>= 0.96, < 2.0';
-      recommends 'Test::TCP', '1.12';
+    requires 'Test::More', '>= 0.96, < 2.0';
+    recommends 'Test::TCP', '1.12';
   };
 
   on 'develop' => sub {
-      recommends 'Devel::NYTProf';
+    recommends 'Devel::NYTProf';
   };
 
   feature 'sqlite', 'SQLite support' => sub {
-      recommends 'DBD::SQLite';
+    recommends 'DBD::SQLite';
   };
+
+  requires 'Plack', '1.0000', git => 'git://github.com/plack/Plack.git';
+  requires 'Starman', '0.3200',
+    git => 'git://github.com/miyagawa/Starman.git', rev => '4325df8';
 
 =head1 VERSION
 
