@@ -79,6 +79,21 @@ sub prereq {
 
 sub prereq_specs {
     my $self = shift;
+
+    my $specs = $self->prereq_specs_with_requirements;
+    for my $phase (keys %$specs) {
+        for my $type (keys %{ $specs->{$phase} }) {
+            while (my ($k, $v) = each %{ $specs->{$phase}->{$type} }) {
+                $specs->{$phase}->{$type}->{$k} = "$v"; # force overload
+            }
+        }
+    }
+
+    $specs;
+}
+
+sub prereq_specs_with_requirements {
+    my $self = shift;
     $self->{result}{spec};
 }
 
