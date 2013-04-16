@@ -2,6 +2,10 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+0.9031  2013-04-17 08:39:17 JST
+        - Revert EXPERIMENTAL git URL options since it causes failures when stringified
+          inside CPAN::Meta #13
+
 0.9030  2013-04-14 17:05:46 JST
         - Fixed a bug where prereqs_with with an empty feature list causes an exception
 
