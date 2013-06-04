@@ -32,7 +32,7 @@ like C<cpanm --installdeps .> would work.
 It gets more painful when you develop a web application that you want
 to deploy on a different environment using version control system
 (such as cloud infrastructure), because it requires you to often
-commit the META file or C<inc/> directory (or even worse, botu) to a
+commit the META file or C<inc/> directory (or even worse, both) to a
 repository when your build script uses non-core modules such as
 L<Module::Install> or L<File::Copy::Recursive>.
 
@@ -103,7 +103,7 @@ tools:
 =item Dist::Milla
 
 L<Dist::Milla> is a profile for L<Dist::Zilla> that has a C<cpanfile>
-support to declare dependendies for your module.
+support to declare dependencies for your module.
 
 =item Dist::Zilla
 

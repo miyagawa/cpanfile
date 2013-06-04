@@ -412,7 +412,7 @@ warnings to users is a caller's responsibility.
   $file->merge_meta('META.yml');
   $file->merge_meta('MYMETA.json', '2.0');
 
-Merge the effective prereqs with Meta speicifcation loaded from the
+Merge the effective prereqs with Meta specification loaded from the
 given META file, using CPAN::Meta. You can specify the META spec
 version in the second argument, which defaults to 1.4 in case the
 given file is YAML, and 2 if it is JSON.
