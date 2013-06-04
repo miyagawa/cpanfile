@@ -103,7 +103,7 @@ tools:
 =item Dist::Milla
 
 L<Dist::Milla> is a profile for L<Dist::Zilla> that has a C<cpanfile>
-support to declare dependendies for your module.
+support to declare dependencies for your module.
 
 =item Dist::Zilla
 
