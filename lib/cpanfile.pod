@@ -23,10 +23,6 @@ cpanfile - A format for describing CPAN dependencies for Perl applications
     recommends 'DBD::SQLite';
   };
 
-  requires 'Plack', '1.0000', git => 'git://github.com/plack/Plack.git';
-  requires 'Starman', '0.3200',
-    git => 'git://github.com/miyagawa/Starman.git', rev => '4325df8';
-
 =head1 VERSION
 
 0.9100
