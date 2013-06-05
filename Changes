@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+0.9032  2013-06-05 11:35:58 JST
+        - repackage for PAUSE
+
 0.9031  2013-04-17 08:39:17 JST
         - Revert EXPERIMENTAL git URL options since it causes failures when stringified
           inside CPAN::Meta #13
