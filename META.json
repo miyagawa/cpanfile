@@ -61,7 +61,7 @@
          "web" : "https://github.com/miyagawa/cpanfile"
       }
    },
-   "version" : "0.9033",
+   "version" : "0.9034",
    "x_contributors" : [
       "David Steinbrunner <dsteinbrunner@pobox.com>",
       "Masahiro Honma <hiratara@cpan.org>",

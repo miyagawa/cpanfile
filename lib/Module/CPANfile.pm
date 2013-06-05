@@ -6,7 +6,7 @@ use Carp ();
 use Module::CPANfile::Environment ();
 use Module::CPANfile::Result;
 
-our $VERSION = '0.9033';
+our $VERSION = '0.9034';
 
 sub new {
     my($class, $file) = @_;
