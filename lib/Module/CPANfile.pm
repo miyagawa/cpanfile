@@ -70,6 +70,11 @@ sub prereqs {
     CPAN::Meta::Prereqs->new($self->prereq_specs);
 }
 
+sub effective_prereqs {
+    my($self, $features) = @_;
+    $self->prereqs_with(@{$features || []});
+}
+
 sub prereqs_with {
     my($self, @feature_identifiers) = @_;
 
@@ -224,7 +229,7 @@ Returns a hash reference that should be passed to C<< CPAN::Meta::Prereqs->new >
 
 Returns a list of features available in the cpanfile as L<CPAN::Meta::Feature>.
 
-=item prereqs_with(@identifiers)
+=item prereqs_with(@identifiers), effective_prereqs(\@identifiers)
 
 Retuens L<CPAN::Meta::Prereqs> object, with merged prereqs for
 features identified with the C<@identifiers>.

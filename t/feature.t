@@ -48,7 +48,22 @@ FILE
     }
 
     {
+        my $prereqs = $cpanfile->effective_prereqs;
+        is_deeply $prereqs->as_string_hash, {
+            test => { requires => { 'Test::More' => '0.90' } },
+        };
+    }
+
+    {
         my $prereqs = $cpanfile->prereqs_with('sqlite');
+        is_deeply $prereqs->as_string_hash, {
+            test => { requires => { 'Test::More' => '0.90' } },
+            runtime => { requires => { 'DBD::SQLite' => '0' } },
+        };
+    }
+
+    {
+        my $prereqs = $cpanfile->effective_prereqs(['sqlite']);
         is_deeply $prereqs->as_string_hash, {
             test => { requires => { 'Test::More' => '0.90' } },
             runtime => { requires => { 'DBD::SQLite' => '0' } },
