@@ -17,7 +17,7 @@ sub load {
     my($proto, $file) = @_;
 
     my $self = ref $proto ? $proto : $proto->new;
-    $self->parse($file || 'cpanfile');
+    $self->parse($file || Cwd::abs_path('cpanfile'));
     $self;
 }
 
@@ -30,8 +30,6 @@ sub save {
 
 sub parse {
     my($self, $file) = @_;
-
-    $file = Cwd::abs_path($file);
     $self->{result} = Module::CPANfile::Environment::parse($file) or die $@;
 }
 
