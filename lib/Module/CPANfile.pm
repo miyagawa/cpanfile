@@ -62,7 +62,13 @@ sub feature {
     });
 }
 
-sub prereqs { shift->prereq }
+sub prereq { shift->prereqs }
+
+sub prereqs {
+    my $self = shift;
+    require CPAN::Meta::Prereqs;
+    CPAN::Meta::Prereqs->new($self->prereq_specs);
+}
 
 sub prereqs_with {
     my($self, @feature_identifiers) = @_;
@@ -71,12 +77,6 @@ sub prereqs_with {
     my @others = map { $self->feature($_)->prereqs } @feature_identifiers;
 
     $prereqs->with_merged_prereqs(\@others);
-}
-
-sub prereq {
-    my $self = shift;
-    require CPAN::Meta::Prereqs;
-    CPAN::Meta::Prereqs->new($self->prereq_specs);
 }
 
 sub prereq_specs {
