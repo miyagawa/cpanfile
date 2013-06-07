@@ -3,7 +3,7 @@ use strict;
 use warnings;
 use Cwd;
 use Carp ();
-use Module::CPANfile::Environment ();
+use Module::CPANfile::Environment;
 use Module::CPANfile::Result;
 
 our $VERSION = '0.9034';
@@ -30,7 +30,14 @@ sub save {
 
 sub parse {
     my($self, $file) = @_;
-    $self->{result} = Module::CPANfile::Environment::parse($file) or die $@;
+
+    my $code = do {
+        open my $fh, "<", $file or die "$file: $!";
+        join '', <$fh>;
+    };
+
+    my $env = Module::CPANfile::Environment->new($file);
+    $self->{result} = $env->parse($code) or die $@;
 }
 
 sub from_prereqs {
