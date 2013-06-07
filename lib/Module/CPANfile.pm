@@ -236,7 +236,7 @@ Returns a list of features available in the cpanfile as L<CPAN::Meta::Feature>.
 
 =item prereqs_with(@identifiers), effective_prereqs(\@identifiers)
 
-Retuens L<CPAN::Meta::Prereqs> object, with merged prereqs for
+Returns L<CPAN::Meta::Prereqs> object, with merged prereqs for
 features identified with the C<@identifiers>.
 
 =item to_string($include_empty)
