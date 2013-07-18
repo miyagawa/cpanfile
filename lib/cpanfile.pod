@@ -50,7 +50,7 @@ The format (DSL syntax) is inspired by L<Module::Install> and
 L<Module::Build::Functions>.
 
 C<cpanfile> specification (this document) is based on Ruby's
-L<Gemfile|http://gembundler.com/man/gemfile.5.html> specification.
+L<Gemfile|http://bundler.io/v1.3/man/gemfile.5.html> specification.
 
 =head1 SEE ALSO
 
