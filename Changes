@@ -2,6 +2,10 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+0.9035  2013-07-24 13:10:29 PDT
+        - Fix a bug where warnings will be raised if the content of cpanfile has sprintf-style
+          %X content somewhere (reported by frew)
+
 0.9034  2013-06-05 12:09:11 JST
         - split .pm files, mainly for PAUSE
 

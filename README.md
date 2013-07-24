@@ -60,9 +60,9 @@ specific dependencies, not just for CPAN distributions.
 
     Returns a list of features available in the cpanfile as [CPAN::Meta::Feature](http://search.cpan.org/perldoc?CPAN::Meta::Feature).
 
-- prereqs\_with(@identifiers)
+- prereqs\_with(@identifiers), effective\_prereqs(\\@identifiers)
 
-    Retuens [CPAN::Meta::Prereqs](http://search.cpan.org/perldoc?CPAN::Meta::Prereqs) object, with merged prereqs for
+    Returns [CPAN::Meta::Prereqs](http://search.cpan.org/perldoc?CPAN::Meta::Prereqs) object, with merged prereqs for
     features identified with the `@identifiers`.
 
 - to\_string($include\_empty)
