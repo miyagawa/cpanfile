@@ -1,5 +1,6 @@
 package Module::CPANfile::Environment;
 use strict;
+use warnings;
 use Module::CPANfile::Result;
 use Carp ();
 
@@ -39,8 +40,9 @@ sub parse {
 
     {
         local $@;
-        $res = eval sprintf <<EVAL, $file_id++;
-package Module::CPANfile::Sandbox%d;
+        $file_id++;
+        $res = eval <<EVAL;
+package Module::CPANfile::Sandbox$file_id;
 no warnings;
 my \$_result;
 BEGIN { \$_result = Module::CPANfile::Environment->bind }

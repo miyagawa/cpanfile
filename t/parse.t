@@ -23,6 +23,11 @@ FILE
     like $@, qr/cpanfile line 1/;
 }
 
+{
+    my $r = write_cpanfile("# %4N bug");
+    eval { Module::CPANfile->load };
+    is $@, '';
+}
 
 {
     my $r = write_cpanfile(<<FILE);
