@@ -4,7 +4,7 @@
       "Tatsuhiko Miyagawa"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Milla version v1.0.2, Dist::Zilla version 4.300034, CPAN::Meta::Converter version 2.131490",
+   "generated_by" : "Dist::Milla version v1.0.3, Dist::Zilla version 4.300035, CPAN::Meta::Converter version 2.131560",
    "license" : [
       "perl_5"
    ],
@@ -61,7 +61,7 @@
          "web" : "https://github.com/miyagawa/cpanfile"
       }
    },
-   "version" : "0.9034",
+   "version" : "0.9035",
    "x_contributors" : [
       "David Steinbrunner <dsteinbrunner@pobox.com>",
       "Masahiro Honma <hiratara@cpan.org>",
