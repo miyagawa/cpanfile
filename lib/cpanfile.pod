@@ -25,7 +25,7 @@ cpanfile - A format for describing CPAN dependencies for Perl applications
 
 =head1 VERSION
 
-0.9100
+This doucment describes cpanfile format version 1.0.
 
 =head1 DESCRIPTION  
 
@@ -39,6 +39,12 @@ C<cpanfile> in the same directory as C<myapp.conf>.
 Tools supporting C<cpanfile> format (e.g. L<cpanm> and L<carton>) will
 automatically detect the file and install dependencies for the code to
 run.
+
+There are also tools to support converting cpanfile to CPAN toolchain
+compatible formats, such as L<Module::CPANfile>,
+L<Dist::Zilla::Plugin::Prereqs::FromCPANfile>,
+L<Module::Install::CPANfil>, so that C<cpanfile> can be used to
+describe dependencies for a CPAN distribution as well.
 
 =head1 AUTHOR
 
