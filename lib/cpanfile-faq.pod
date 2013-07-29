@@ -7,14 +7,13 @@ cpanfile-faq - cpanfile FAQ
 =head2 Does cpanfile replace Makefile.PL/Build.PL or META.yml/json?
 
 No, it doesn't. C<cpanfile> is a simpler way to declare CPAN
-dependencies, mainly to I<your application> rather than CPAN
-distributions. It can also be used as a format to manage and express
-CPAN dependencies (prereqs) for your module upon authoring modules.
+dependencies, mainly for I<your application> rather than CPAN
+distributions.
 
-CPAN distributions do not need to B<switch> to C<cpanfile>, but
-you can certainly manage the dependencies in C<cpanfile>, then
-export them into C<META.json> files when shipping to CPAN, using
-tools such as L<Dist::Milla> or L<Module::Install::CPANfile>
+However, while CPAN distributions do not need to B<switch> to
+C<cpanfile>, you can certainly I<manage> the dependencies in
+C<cpanfile>, then export them into C<META.json> files when shipping to
+CPAN, using tools such as L<Dist::Milla> or L<Module::Install::CPANfile>
 
 =head2 Why do we need yet another format?
 
@@ -31,10 +30,9 @@ like C<cpanm --installdeps .> would work.
 
 It gets more painful when you develop a web application that you want
 to deploy on a different environment using version control system
-(such as cloud infrastructure), because it requires you to often
+(such as PaaS/cloud infrastructure), because it requires you to often
 commit the META file or C<inc/> directory (or even worse, both) to a
-repository when your build script uses non-core modules such as
-L<Module::Install> or L<File::Copy::Recursive>.
+repository.
 
 Many web application frameworks generate a boiler-plate C<Makefile.PL>
 for dependency declaration and to let you install dependencies with
@@ -47,20 +45,6 @@ locally using supported tools such as L<cpanm> or L<Carton>. Because
 C<cpanfile> lists all the dependencies of your entire application and
 will be updated over time, it makes perfect sense to commit the file
 to a version control system, and push the file for a deployment.
-
-=item More control for the dependencies analysis
-
-One of the limitation when I tried to implement a self-contained
-L<local::lib> library path feature for cpanminus was that the
-configuration phase runs the build file as a separate perl process,
-i.e. C<< perl Makefile.PL >>.
-
-This makes it so hard for the script to I<not> accidentally load any
-modules installed in the local C<site_perl> directory when determining
-the dynamic dependencies. With the recent evolution of CPAN installer
-ecosystem such as L<local::lib> support, it makes things much easier
-if installers figure out whether dependencies are installed, instead
-of by build tools such as L<Module::Install>.
 
 =item Familiar DSL syntax
 
