@@ -96,6 +96,11 @@ dependencies declared in C<cpanfile> into META files as well as build
 files. You can combine them using other prerequisite scanners like
 C<AutoPrereqs>.
 
+=item Minilla
+
+L<Minilla> is a yet another authoring tool that supports C<cpanfile>
+as a way to describe dependencies for your CPAN module.
+
 =item Module::Install
 
 L<Module::Install::CPANfile> provides a C<cpanfile> DSL that reads
