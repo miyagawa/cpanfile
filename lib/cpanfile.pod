@@ -32,9 +32,66 @@ This doucment describes cpanfile format version 1.0.
 C<cpanfile> describes CPAN dependencies required to execute associated
 Perl code.
 
-Place the C<cpanfile> in the root of the directory containing the
-associated code. For instance, in a Catalyst application, place the
-C<cpanfile> in the same directory as C<myapp.conf>.
+=head1 SYNTAX
+
+=over 4
+
+=item requires, recommends, suggests, conflicts
+
+  requires $module, $version_requirement;
+
+Describes the requirement for a module. See L<CPAN::Meta::Spec> for
+the meanings of each requirement type.
+
+When version requirement is omitted, it is assumed that C<0> is
+passed, meaning any version of the module would satisfy the
+requirement.
+
+Version requirement can either be a version number or a string that
+satisfies L<CPAN::Meta::Spec/Version Ranges>, such as C<< >= 1.0, !=
+1.1 >>.
+
+=item on
+
+  on $phase => sub { ... };
+
+Describe requirements for a specific phase. Available phases are
+C<configure>, C<build>, C<test>, C<runtime> and C<develop>.
+
+=item feature
+
+  feature $identifier, $description => sub { ... };
+
+Group requirements with features. Description can be omitted, when it
+is assumed to be the same as identifier. See
+L<CPAN::Meta::Spec/optional_features> for more details.
+
+=item configure_requires, build_requires, test_requires, author_requires
+
+  configure_requires $module, $version;
+  # on 'configure' => sub { requires $module, $version }
+
+  build_requires $module, $version;
+  # on 'build' => sub { requires $module, $version };
+
+  test_requires $module, $version;
+  # on 'test' => sub { requires $module, $version };
+
+  author_requires $module, $version;
+  # on 'develop' => sub { requires $module, $version };
+
+Shortcut for C<requires> in specific phase. This is mainly provided
+for compatibilities with L<Module::Install> DSL.
+
+=back
+
+=head1 USAGE
+
+C<cpanfile> is a format to describe dependencies. How to use this file
+is dependent on the tools reading/writing it.
+
+Usually, you're expected to place the C<cpanfile> in the root of the
+directory containing the associated code.
 
 Tools supporting C<cpanfile> format (e.g. L<cpanm> and L<carton>) will
 automatically detect the file and install dependencies for the code to
