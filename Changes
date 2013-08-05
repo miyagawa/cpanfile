@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+1.0001  2013-08-05 14:24:07 PDT
+        - Updated documentation about syntax
+
 1.0000  2013-08-04 12:28:32 PDT
         - Make the cpanfile spec 1.0
         - Updated documentation
