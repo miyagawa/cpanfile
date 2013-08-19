@@ -51,6 +51,11 @@ Version requirement can either be a version number or a string that
 satisfies L<CPAN::Meta::Spec/Version Ranges>, such as C<< >= 1.0, !=
 1.1 >>.
 
+Note that, per L<CPAN::Meta::Spec>, when a plain version number is
+given, it means the version I<or newer> is required. If you want a
+specific version for a module, use the specific range syntax, i.e.
+C< == 2.1 >.
+
 =item on
 
   on $phase => sub { ... };
