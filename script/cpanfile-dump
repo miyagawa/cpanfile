@@ -1,0 +1,104 @@
+#!perl
+use strict;
+use warnings;
+use CPAN::Meta::Requirements;
+use Module::CPANfile;
+use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat);
+
+my @phases = qw(configure build test develop runtime);
+my @types  = qw(requires recommends suggests conflicts);
+
+my %o = map { $_ => 1 } qw/configure build test runtime requires recommends/;
+
+GetOptions(
+    "h|help", \$o{help},
+    map { ("$_!", \$o{$_}) } (@phases, @types),
+);
+
+if ($o{conflicts}) {
+    delete $o{$_} for qw/requires recommends suggests/;
+}
+
+if ($o{help}) {
+    if (eval { require Pod::Usage; 1 }) {
+        Pod::Usage::pod2usage(1);
+    } else {
+        die "Usage: cpanfile-dump\n\nSee perldoc cpanfile-dump for more details.\n";
+    }
+}
+ 
+my $file = Module::CPANfile->load("cpanfile");
+my $prereqs = $file->prereqs; # CPAN::Meta::Prereqs object
+
+my $merged = CPAN::Meta::Requirements->new;
+
+for my $phase ( @phases ) {
+    next unless $o{$phase};
+    for my $type ( @types ) {
+        next unless $o{$type};
+        $merged->add_requirements( $prereqs->requirements_for( $phase, $type ) );
+    }
+}
+
+print "$_\n" for sort $merged->required_modules;
+
+
+__END__
+
+=head1 NAME
+
+cpanfile-dump - Dump prerequisites from a cpanfile
+
+=head1 SYNOPSIS
+
+  # Install typical required and recommended modules
+  cpan `cpanfile-dump`
+
+  # Skip configures phase
+  cpan `cpanfile-dump --no-configure`
+
+  # Also include develop phase and suggests type 
+  cpan `cpanfile-dump --develop --suggests`
+
+=head1 DESCRIPTION
+
+This script reads prereqs from a F<cpanfile> and dumps a raw list of them to
+standard output.  This is useful for piping these as input to another program.
+
+By default, it prints configure, build, test and runtime requirements and
+recommendations.  Command line options can be used to modify the default
+choices.
+
+This script is distributed with L<Module::CPANfile> since version 1.0002.
+
+=head1 OPTIONS
+
+=over 4
+
+=item --configure, --build, --test, --runtime, --develop
+
+Specify the phase to include/exclude. Defaults to include all but
+C<--develop> but you can exclude some phases by specifying the options with
+C<--no-> prefix, like C<--no-configure>.
+
+=item --requires, --recommends, --suggests, --conflicts
+
+Specify the type to include/exclude. Defaults to include only C<--requires> and
+C<--recommends> but you can exclude some types by specifying the options with
+C<--no-> prefix, like C<--no-recommends>.
+
+Specifying C<--conflicts> will turn off all other types (even if specified
+on the command line).
+
+=back
+
+=head1 AUTHOR
+
+David Golden
+
+=head1 SEE ALSO
+
+L<Module::CPANfile> L<cpanfile> L<App::mymeta_requires>
+
+=cut
+
