@@ -74,8 +74,9 @@ cpanfile-dump - Dump prerequisites from a cpanfile
 
 =head1 DESCRIPTION
 
-This script reads prereqs from a F<cpanfile> and dumps a raw list of them to
-standard output.  This is useful for piping these as input to another program.
+This script reads prereqs from a F<cpanfile> and dumps a raw list of
+them to standard output.  This is useful for piping these as input to
+another program such as C<cpan>, C<cpanm> or C<cpanp>.
 
 By default, it prints configure, build, test and runtime requirements and
 recommendations.  Command line options can be used to modify the default
@@ -111,6 +112,11 @@ Specify features to include in the dump.  C<--with-feature> and C<--without-feat
 may be used more than once.
 
 =back
+
+=head1 NOTES
+
+Because C<cpanm> supports reading cpanfile directly, instead of piping the output of this
+program, you're recommended to use C<cpanm --installdeps .> to install modules from cpanfile.
 
 =head1 AUTHOR
 
