@@ -12,6 +12,9 @@ my %o = map { $_ => 1 } qw/configure build test runtime requires recommends/;
 
 GetOptions(
     "h|help", \$o{help},
+    "with-feature=s@",      \$o{with},
+    "without-feature=s@",   \$o{without},
+    "with-all-features",    \$o{with_all},
     map { ("$_!", \$o{$_}) } (@phases, @types),
 );
 
@@ -28,7 +31,13 @@ if ($o{help}) {
 }
  
 my $file = Module::CPANfile->load("cpanfile");
-my $prereqs = $file->prereqs; # CPAN::Meta::Prereqs object
+
+my %excludes = map { $_ => 1 } @{$o{without}};
+my @features = grep { !$excludes{$_} } $o{with_all}
+    ? ( map { $_->identifier } $file->features )
+    : @{$o{with}};
+
+my $prereqs = $file->prereqs_with( @features ); # CPAN::Meta::Prereqs object
 
 my $merged = CPAN::Meta::Requirements->new;
 
@@ -60,6 +69,9 @@ cpanfile-dump - Dump prerequisites from a cpanfile
   # Also include develop phase and suggests type 
   cpan `cpanfile-dump --develop --suggests`
 
+  # Include a feature
+  cpan `cpanfile-dump --with-feature=sqlite`
+
 =head1 DESCRIPTION
 
 This script reads prereqs from a F<cpanfile> and dumps a raw list of them to
@@ -89,6 +101,14 @@ C<--no-> prefix, like C<--no-recommends>.
 
 Specifying C<--conflicts> will turn off all other types (even if specified
 on the command line).
+
+=item --with-feature, --with-all-features, --without-feature
+
+    cpanfile-dump --with-feature=sqlite
+    cpanfile-dump --with-all-features --without-feature=yaml
+
+Specify features to include in the dump.  C<--with-feature> and C<--without-feature>
+may be used more than once.
 
 =back
 
