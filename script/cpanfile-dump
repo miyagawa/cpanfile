@@ -76,7 +76,8 @@ cpanfile-dump - Dump prerequisites from a cpanfile
 
 This script reads prereqs from a F<cpanfile> and dumps a raw list of
 them to standard output.  This is useful for piping these as input to
-another program such as C<cpan>, C<cpanm> or C<cpanp>.
+another program that doesn't support reading cpanfile directly,
+i.e. C<cpan> or C<cpanp>.
 
 By default, it prints configure, build, test and runtime requirements and
 recommendations.  Command line options can be used to modify the default
