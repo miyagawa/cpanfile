@@ -17,6 +17,7 @@ my %WriteMakefileArgs = (
   },
   "DISTNAME" => "Module-CPANfile",
   "EXE_FILES" => [
+    "script/cpanfile-dump",
     "script/mymeta-cpanfile"
   ],
   "LICENSE" => "perl",
@@ -28,7 +29,7 @@ my %WriteMakefileArgs = (
   "TEST_REQUIRES" => {
     "Test::More" => "0.88"
   },
-  "VERSION" => "1.0001",
+  "VERSION" => "1.0002",
   "test" => {
     "TESTS" => "t/*.t"
   }

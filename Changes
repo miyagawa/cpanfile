@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+1.0002  2013-09-06 12:26:11 PDT
+        - Add cpanfile-dump utility (xdg)
+
 1.0001  2013-08-05 14:24:07 PDT
         - Updated documentation about syntax
 
