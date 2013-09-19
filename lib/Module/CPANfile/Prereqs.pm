@@ -76,14 +76,7 @@ sub prereq_each {
 
 sub identifiers {
     my $self = shift;
-
-    my(@identifiers, %seen);
-    for my $prereq (@{$self->{prereqs}}) {
-        push @identifiers, $prereq->feature
-          if $prereq->feature && !$seen{$prereq->feature}++;
-    }
-
-    @identifiers;
+    keys %{$self->{features}};
 }
 
 sub feature {
