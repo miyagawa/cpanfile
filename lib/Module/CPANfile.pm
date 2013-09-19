@@ -64,7 +64,7 @@ sub feature {
     require CPAN::Meta::Feature;
     CPAN::Meta::Feature->new($data->{identifier}, {
         description => $data->{description},
-        prereqs => $data->{spec},
+        prereqs => $self->_normalize_prereqs($data->{spec}),
     });
 }
 
@@ -92,7 +92,23 @@ sub prereqs_with {
 
 sub prereq_specs {
     my $self = shift;
-    $self->{result}{spec};
+    $self->_normalize_prereqs($self->{result}{spec});
+}
+
+sub _normalize_prereqs {
+    my($self, $prereqs) = @_;
+
+    my $copy = {};
+
+    for my $phase (keys %$prereqs) {
+        for my $type (keys %{ $prereqs->{$phase} }) {
+            while (my($module, $requirement) = each %{ $prereqs->{$phase}{$type} }) {
+                $copy->{$phase}{$type}{$module} = ref $requirement ? $requirement->version : $requirement;
+            }
+        }
+    }
+
+    $copy;
 }
 
 sub merge_meta {

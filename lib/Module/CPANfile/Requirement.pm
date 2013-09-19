@@ -1,8 +1,5 @@
 package Module::CPANfile::Requirement;
 use strict;
-use overload '""' => \&as_string, fallback => 1;
-
-sub as_string { shift->{version} }
 
 sub as_hashref {
     my $self = shift;
