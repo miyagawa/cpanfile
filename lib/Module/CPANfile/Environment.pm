@@ -1,7 +1,6 @@
 package Module::CPANfile::Environment;
 use strict;
 use warnings;
-use Module::CPANfile::Result;
 use Module::CPANfile::Prereqs;
 use Carp ();
 
