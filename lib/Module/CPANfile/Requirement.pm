@@ -1,5 +1,6 @@
 package Module::CPANfile::Requirement;
 use strict;
+use overload q("") => sub { $_[0]->version }, fallback => 1;
 
 sub as_hashref {
     my $self = shift;
@@ -8,11 +9,6 @@ sub as_hashref {
 
 sub new {
     my ($class, %args) = @_;
-
-    # requires 'Plack';
-    # requires 'Plack', '0.9970';
-    # requires 'Plack', git => 'git://github.com/plack/Plack.git', rev => '0.9970';
-    # requires 'Plack', '0.9970', git => 'git://github.com/plack/Plack.git', rev => '0.9970';
 
     $args{version} ||= 0;
 
