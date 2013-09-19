@@ -1,16 +1,10 @@
 package Module::CPANfile::Requirement;
 use strict;
-use overload q("") => sub { $_[0]->version }, fallback => 1;
-
-sub as_hashref {
-    my $self = shift;
-    return +{ %$self };
-}
 
 sub options {
     my $self = shift;
 
-    my $hash = $self->as_hashref;
+    my $hash = { %$self }; # clone
     delete $hash->{$_} for qw( name version );
 
     $hash;
