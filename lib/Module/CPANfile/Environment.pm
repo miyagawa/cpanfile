@@ -2,6 +2,7 @@ package Module::CPANfile::Environment;
 use strict;
 use warnings;
 use Module::CPANfile::Result;
+use Module::CPANfile::Prereqs;
 use Carp ();
 
 my @bindings = qw(
@@ -18,9 +19,9 @@ sub new {
     bless {
         file     => $file,
         phase    => 'runtime', # default phase
-        features => {},
         feature  => undef,
-        prereqs  => {},
+        features => {},
+        prereqs  => Module::CPANfile::Prereqs->new,
     }, $class;
 }
 
@@ -62,8 +63,7 @@ sub _evaluate {
     eval $_[1];
 }
 
-sub features { $_[0]->{features} }
-sub prereqs  { $_[0]->{prereqs} }
+sub prereqs { $_[0]->{prereqs} }
 
 # DSL goes from here
 
@@ -86,15 +86,16 @@ sub feature {
         Carp::croak("Usage: feature 'identifier', 'Description' => sub { ... }");
     }
 
-    local $self->{feature} = $self->{features}{$identifier}
-      = { identifier => $identifier, description => $description, prereqs => {} };
+    local $self->{feature} = $identifier;
+    $self->prereqs->add_feature($identifier, $description);
+
     $code->();
 }
 
 sub osname { die "TODO" }
 
 sub requirement_for {
-    my ($self, $module, @args) = @_;
+    my($self, $module, @args) = @_;
 
     my $requirement = 0;
     $requirement = shift @args if @args % 2;
@@ -107,27 +108,35 @@ sub requirement_for {
 }
 
 sub requires {
-    my($self, $module, @args) = @_;
-    ($self->{feature} ? $self->{feature}{prereqs} : $self->{prereqs})
-      ->{$self->{phase}}{requires}{$module} = $self->requirement_for($module, @args);
+    my $self = shift;
+    $self->add_prereq(requires => @_);
 }
 
 sub recommends {
-    my($self, $module, @args) = @_;
-    ($self->{feature} ? $self->{feature}{prereqs} : $self->{prereqs})
-      ->{$self->{phase}}{recommends}{$module} = $self->requirement_for($module, @args);
+    my $self = shift;
+    $self->add_prereq(recommends => @_);
 }
 
 sub suggests {
-    my($self, $module, @args) = @_;
-    ($self->{feature} ? $self->{feature}{prereqs} : $self->{prereqs})
-      ->{$self->{phase}}{suggests}{$module} = $self->requirement_for($module, @args);
+    my $self = shift;
+    $self->add_prereq(suggests => @_);
 }
 
 sub conflicts {
-    my($self, $module, @args) = @_;
-    ($self->{feature} ? $self->{feature}{prereqs} : $self->{prereqs})
-      ->{$self->{phase}}{conflicts}{$module} = $self->requirement_for($module, @args);
+    my $self = shift;
+    $self->add_prereq(conflicts => @_);
+}
+
+sub add_prereq {
+    my($self, $type, $module, @args) = @_;
+
+    $self->prereqs->add_prereq(
+        feature => $self->{feature},
+        phase   => $self->{phase},
+        type    => $type,
+        module  => $module,
+        requirement => $self->requirement_for($module, @args),
+    );
 }
 
 # Module::Install compatible shortcuts

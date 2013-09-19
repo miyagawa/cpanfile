@@ -5,7 +5,6 @@ use Cwd;
 use Carp ();
 use Module::CPANfile::Environment;
 use Module::CPANfile::Features;
-use Module::CPANfile::Prereqs;
 use Module::CPANfile::Requirement;
 
 our $VERSION = '1.0002';
@@ -41,34 +40,33 @@ sub parse {
     my $env = Module::CPANfile::Environment->new($file);
     $env->parse($code) or die $@;
 
-    $self->{_features} = Module::CPANfile::Features->new($env->features);
-    $self->{_prereqs}  = Module::CPANfile::Prereqs->new($env->prereqs);
+    $self->{_prereqs} = $env->prereqs;
 }
 
 sub from_prereqs {
     my($proto, $prereqs) = @_;
 
     my $self = $proto->new;
-    $self->{_prereqs} = Module::CPANfile::Prereqs->new($prereqs);
+    $self->{_prereqs} = Module::CPANfile::Prereqs->from_cpan_meta($prereqs);
 
     $self;
 }
 
 sub features {
     my $self = shift;
-    $self->{_features} ? $self->{_features}->all : ();
+    map $self->feature($_), $self->{_prereqs}->identifiers;
 }
 
 sub feature {
     my($self, $identifier) = @_;
-    $self->{_features}->get($identifier);
+    $self->{_prereqs}->feature($identifier);
 }
 
 sub prereq { shift->prereqs }
 
 sub prereqs {
     my $self = shift;
-    $self->{_prereqs};
+    $self->{_prereqs}->as_cpan_meta;
 }
 
 sub effective_prereqs {
@@ -88,6 +86,11 @@ sub prereqs_with {
 sub prereq_specs {
     my $self = shift;
     $self->prereqs->as_string_hash;
+}
+
+sub options_for_module {
+    my $self = shift;
+
 }
 
 sub merge_meta {

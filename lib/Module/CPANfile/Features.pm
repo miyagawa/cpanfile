@@ -1,7 +1,7 @@
 package Module::CPANfile::Features;
 use strict;
 use Carp ();
-use Module::CPANfile::Feature;
+use CPAN::Meta::Feature;
 
 sub new {
     my($class, $features) = @_;
@@ -24,7 +24,7 @@ sub get {
     my $data = $self->{features}{$identifier}
       or Carp::croak("Unknown feature '$identifier'");
 
-    Module::CPANfile::Feature->new($data->{identifier}, {
+    CPAN::Meta::Feature->new($data->{identifier}, {
         description => $data->{description},
         prereqs => $data->{prereqs},
     });
