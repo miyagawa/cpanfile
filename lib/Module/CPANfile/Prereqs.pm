@@ -74,6 +74,16 @@ sub prereq_each {
     }
 }
 
+sub find {
+    my($self, $module) = @_;
+
+    for my $prereq (@{$self->{prereqs}}) {
+        return $prereq if $prereq->module eq $module;
+    }
+
+    return;
+}
+
 sub identifiers {
     my $self = shift;
     keys %{$self->{features}};

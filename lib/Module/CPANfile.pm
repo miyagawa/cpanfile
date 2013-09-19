@@ -88,9 +88,15 @@ sub prereq_specs {
     $self->prereqs->as_string_hash;
 }
 
-sub options_for_module {
-    my $self = shift;
+sub prereq_for_module {
+    my($self, $module) = @_;
+    $self->{_prereqs}->find($module);
+}
 
+sub options_for_module {
+    my($self, $module) = @_;
+    my $prereq = $self->prereq_for_module($module) or return;
+    $prereq->requirement->options;
 }
 
 sub merge_meta {

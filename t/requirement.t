@@ -10,21 +10,18 @@ requires 'Plack', '0.9970',
 FILE
 
     my $file = Module::CPANfile->load;
-
-    # backword compatibility
     is_deeply $file->prereq_specs, {
         runtime => {
             requires => { 'Plack' => '0.9970' },
         },
     };
 
-    my $got = $file->prereq_specs->{runtime}->{requires}->{Plack};
-    isa_ok $got, 'Module::CPANfile::Requirement';
-    is_deeply $got->as_hashref, {
-        name    => 'Plack',
-        version => '0.9970',
-        git     => 'git://github.com/plack/Plack.git',
-        rev     => '0.9970',
+    my $req = $file->prereqs->requirements_for(runtime => 'requires');
+    is $req->requirements_for_module('Plack'), '0.9970';
+
+    is_deeply $file->options_for_module('Plack'), {
+        git => 'git://github.com/plack/Plack.git',
+        rev => '0.9970',
     };
 };
 
@@ -35,19 +32,13 @@ requires 'Plack', # drop version
 FILE
 
     my $file = Module::CPANfile->load;
-
-    # backword compatibility
     is_deeply $file->prereq_specs, {
         runtime => {
             requires => { 'Plack' => 0 },
         },
     };
 
-    my $got = $file->prereq_specs->{runtime}->{requires}->{Plack};
-    isa_ok $got, 'Module::CPANfile::Requirement';
-    is_deeply $got->as_hashref, {
-        name    => 'Plack',
-        version => '0',
+    is_deeply $file->options_for_module('Plack'), {
         git     => 'git://github.com/plack/Plack.git',
         rev     => '0.9970',
     };
@@ -59,19 +50,13 @@ requires 'Plack', '0.9970', git => 'git://github.com/plack/Plack.git';
 FILE
 
     my $file = Module::CPANfile->load;
-
-    # backword compatibility
     is_deeply $file->prereq_specs, {
         runtime => {
             requires => { 'Plack' => '0.9970' },
         },
     };
 
-    my $got = $file->prereq_specs->{runtime}->{requires}->{Plack};
-    isa_ok $got, 'Module::CPANfile::Requirement';
-    is_deeply $got->as_hashref, {
-        name    => 'Plack',
-        version => '0.9970',
+    is_deeply $file->options_for_module('Plack'), {
         git     => 'git://github.com/plack/Plack.git',
     };
 };
@@ -82,19 +67,13 @@ requires 'Plack', git => 'git://github.com/plack/Plack.git';
 FILE
 
     my $file = Module::CPANfile->load;
-
-    # backword compatibility
     is_deeply $file->prereq_specs, {
         runtime => {
             requires => { 'Plack' => 0 },
         },
     };
 
-    my $got = $file->prereq_specs->{runtime}->{requires}->{Plack};
-    isa_ok $got, 'Module::CPANfile::Requirement';
-    is_deeply $got->as_hashref, {
-        name    => 'Plack',
-        version => 0,
+    is_deeply $file->options_for_module('Plack'), {
         git     => 'git://github.com/plack/Plack.git',
     };
 };

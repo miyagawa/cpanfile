@@ -7,6 +7,15 @@ sub as_hashref {
     return +{ %$self };
 }
 
+sub options {
+    my $self = shift;
+
+    my $hash = $self->as_hashref;
+    delete $hash->{$_} for qw( name version );
+
+    $hash;
+}
+
 sub new {
     my ($class, %args) = @_;
 
