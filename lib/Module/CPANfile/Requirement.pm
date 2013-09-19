@@ -19,7 +19,7 @@ sub new {
         name    => $args{name},
         version => $args{version},
         (exists $args{git} ? (git => $args{git}) : ()),
-        (exists $args{rev} ? (rev => $args{rev}) : ()),
+        (exists $args{ref} ? (ref => $args{ref}) : ()),
     }, $class;
 }
 
@@ -27,6 +27,6 @@ sub name    { shift->{name} }
 sub version { shift->{version} }
 
 sub git { shift->{git} }
-sub rev { shift->{rev} }
+sub ref { shift->{ref} }
 
 1;
