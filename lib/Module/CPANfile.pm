@@ -4,6 +4,7 @@ use warnings;
 use Cwd;
 use Carp ();
 use Module::CPANfile::Environment;
+use Module::CPANfile::Requirement;
 use Module::CPANfile::Result;
 
 our $VERSION = '1.0002';
