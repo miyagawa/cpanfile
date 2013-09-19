@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+1.0901  2013-09-19 18:59:55 JST
+        - Remove unused code
+
 1.0900  2013-09-19 18:45:59 JST
         - Experimental support for git URL specification
         - Complete rewrite of internal to preserve original prereq statement as much as possible
