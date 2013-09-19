@@ -24,12 +24,13 @@ my %WriteMakefileArgs = (
   "NAME" => "Module::CPANfile",
   "PREREQ_PM" => {
     "CPAN::Meta" => "2.12091",
-    "CPAN::Meta::Prereqs" => "2.12091"
+    "CPAN::Meta::Prereqs" => "2.12091",
+    "parent" => 0
   },
   "TEST_REQUIRES" => {
     "Test::More" => "0.88"
   },
-  "VERSION" => "1.0002",
+  "VERSION" => "1.0900",
   "test" => {
     "TESTS" => "t/*.t"
   }
