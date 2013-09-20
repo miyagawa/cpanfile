@@ -62,7 +62,7 @@
          "web" : "https://github.com/miyagawa/cpanfile"
       }
    },
-   "version" : "1.0903",
+   "version" : "1.0904",
    "x_contributors" : [
       "Atsushi Kato <ktat@cpan.org>",
       "David Golden <dagolden@cpan.org>",
