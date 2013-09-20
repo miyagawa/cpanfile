@@ -68,6 +68,11 @@ sub prereqs {
     $self->{_prereqs}->as_cpan_meta;
 }
 
+sub merged_requirements {
+    my $self = shift;
+    $self->{_prereqs}->merged_requirements;
+}
+
 sub effective_prereqs {
     my($self, $features) = @_;
     $self->prereqs_with(@{$features || []});

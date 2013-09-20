@@ -74,6 +74,17 @@ sub prereq_each {
     }
 }
 
+sub merged_requirements {
+    my $self = shift;
+
+    my $reqs = CPAN::Meta::Requirements->new;
+    for my $prereq (@{$self->{prereqs}}) {
+        $reqs->add_string_requirement($prereq->module, $prereq->requirement->version);
+    }
+
+    $reqs;
+}
+
 sub find {
     my($self, $module) = @_;
 
