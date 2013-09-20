@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+1.0903  2013-09-20 15:36:30 JST
+        - Added $cpanfile->merged_requirements to get the CPAN::Meta::Requirements for all prereqs
+
 1.0902  2013-09-20 13:45:15 JST
         - s/rev/ref/ for git options
 
