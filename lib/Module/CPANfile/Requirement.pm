@@ -18,4 +18,8 @@ sub version { $_[0]->{version} }
 
 sub options { $_[0]->{options} }
 
+sub has_options {
+    keys %{$_[0]->{options}} > 0;
+}
+
 1;
