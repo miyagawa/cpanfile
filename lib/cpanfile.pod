@@ -25,7 +25,7 @@ cpanfile - A format for describing CPAN dependencies for Perl applications
 
 =head1 VERSION
 
-This doucment describes cpanfile format version 1.0.
+This document describes cpanfile format version 1.0.
 
 =head1 DESCRIPTION  
 
