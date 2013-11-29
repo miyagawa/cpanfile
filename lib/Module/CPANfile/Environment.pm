@@ -8,6 +8,7 @@ my @bindings = qw(
     on requires recommends suggests conflicts
     feature
     osname
+    mirror
     configure_requires build_requires test_requires author_requires
 );
 
@@ -21,6 +22,7 @@ sub new {
         feature  => undef,
         features => {},
         prereqs  => Module::CPANfile::Prereqs->new,
+        mirrors  => [],
     }, $class;
 }
 
@@ -64,6 +66,8 @@ sub _evaluate {
 
 sub prereqs { $_[0]->{prereqs} }
 
+sub mirrors { $_[0]->{mirrors} }
+
 # DSL goes from here
 
 sub on {
@@ -92,6 +96,11 @@ sub feature {
 }
 
 sub osname { die "TODO" }
+
+sub mirror {
+    my($self, $url) = @_;
+    push $self->{mirrors}, $url;
+}
 
 sub requirement_for {
     my($self, $module, @args) = @_;

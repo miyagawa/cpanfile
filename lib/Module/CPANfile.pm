@@ -39,6 +39,7 @@ sub parse {
     my $env = Module::CPANfile::Environment->new($file);
     $env->parse($code) or die $@;
 
+    $self->{_mirrors} = $env->mirrors;
     $self->{_prereqs} = $env->prereqs;
 }
 
@@ -49,6 +50,11 @@ sub from_prereqs {
     $self->{_prereqs} = Module::CPANfile::Prereqs->from_cpan_meta($prereqs);
 
     $self;
+}
+
+sub mirrors {
+    my $self = shift;
+    $self->{_mirrors} || [];
 }
 
 sub features {
@@ -129,15 +135,30 @@ sub _dump {
 sub to_string {
     my($self, $include_empty) = @_;
 
+    my $mirrors = $self->mirrors;
     my $prereqs = $self->prereq_specs;
 
     my $code = '';
+    $code .= $self->_dump_mirrors($mirrors);
     $code .= $self->_dump_prereqs($prereqs, $include_empty);
 
     for my $feature ($self->features) {
         $code .= sprintf "feature %s, %s => sub {\n", _dump($feature->{identifier}), _dump($feature->{description});
         $code .= $self->_dump_prereqs($feature->{spec}, $include_empty, 4);
         $code .= "}\n\n";
+    }
+
+    $code =~ s/\n+$/\n/s;
+    $code;
+}
+
+sub _dump_mirrors {
+    my($self, $mirrors) = @_;
+
+    my $code = "";
+
+    for my $url (@$mirrors) {
+        $code .= "mirror '$url';\n";
     }
 
     $code =~ s/\n+$/\n/s;
