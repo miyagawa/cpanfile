@@ -99,7 +99,7 @@ sub osname { die "TODO" }
 
 sub mirror {
     my($self, $url) = @_;
-    push $self->{mirrors}, $url;
+    push @{$self->{mirrors}}, $url;
 }
 
 sub requirement_for {
