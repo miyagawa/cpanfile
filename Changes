@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+1.0905  2013-12-09 16:26:08 PST
+        - Support mirror syntax (masaki) #22
+
 1.0904  2013-09-21 07:56:31 JST
         - Removed git/ref accessor from Requirement
         - Added $requirement->has_options

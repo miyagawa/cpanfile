@@ -16,7 +16,7 @@ Module::CPANfile - Parse cpanfile
 
 # DESCRIPTION
 
-Module::CPANfile is a tool to handle [cpanfile](http://search.cpan.org/perldoc?cpanfile) format to load application
+Module::CPANfile is a tool to handle [cpanfile](https://metacpan.org/pod/cpanfile) format to load application
 specific dependencies, not just for CPAN distributions.
 
 # METHODS
@@ -36,7 +36,7 @@ specific dependencies, not just for CPAN distributions.
         });
 
     Creates a new Module::CPANfile object from prereqs hash you can get
-    via [CPAN::Meta](http://search.cpan.org/perldoc?CPAN::Meta)'s `prereqs`, or [CPAN::Meta::Prereqs](http://search.cpan.org/perldoc?CPAN::Meta::Prereqs)'
+    via [CPAN::Meta](https://metacpan.org/pod/CPAN::Meta)'s `prereqs`, or [CPAN::Meta::Prereqs](https://metacpan.org/pod/CPAN::Meta::Prereqs)'
     `as_string_hash`.
 
         # read MYMETA, then feed the prereqs to create Module::CPANfile
@@ -50,7 +50,7 @@ specific dependencies, not just for CPAN distributions.
 
 - prereqs
 
-    Returns [CPAN::Meta::Prereqs](http://search.cpan.org/perldoc?CPAN::Meta::Prereqs) object out of the parsed cpanfile.
+    Returns [CPAN::Meta::Prereqs](https://metacpan.org/pod/CPAN::Meta::Prereqs) object out of the parsed cpanfile.
 
 - prereq\_specs
 
@@ -58,11 +58,11 @@ specific dependencies, not just for CPAN distributions.
 
 - features
 
-    Returns a list of features available in the cpanfile as [CPAN::Meta::Feature](http://search.cpan.org/perldoc?CPAN::Meta::Feature).
+    Returns a list of features available in the cpanfile as [CPAN::Meta::Feature](https://metacpan.org/pod/CPAN::Meta::Feature).
 
 - prereqs\_with(@identifiers), effective\_prereqs(\\@identifiers)
 
-    Returns [CPAN::Meta::Prereqs](http://search.cpan.org/perldoc?CPAN::Meta::Prereqs) object, with merged prereqs for
+    Returns [CPAN::Meta::Prereqs](https://metacpan.org/pod/CPAN::Meta::Prereqs) object, with merged prereqs for
     features identified with the `@identifiers`.
 
 - to\_string($include\_empty)
@@ -71,7 +71,7 @@ specific dependencies, not just for CPAN distributions.
         $file->to_string(1);
 
     Returns a canonical string (code) representation for cpanfile. Useful
-    if you want to convert [CPAN::Meta::Prereqs](http://search.cpan.org/perldoc?CPAN::Meta::Prereqs) to a new cpanfile.
+    if you want to convert [CPAN::Meta::Prereqs](https://metacpan.org/pod/CPAN::Meta::Prereqs) to a new cpanfile.
 
         # read MYMETA's prereqs and print cpanfile representation of it
         my $meta = CPAN::Meta->load_file('MYMETA.json');
@@ -112,4 +112,4 @@ Tatsuhiko Miyagawa
 
 # SEE ALSO
 
-[cpanfile](http://search.cpan.org/perldoc?cpanfile), [CPAN::Meta](http://search.cpan.org/perldoc?CPAN::Meta), [CPAN::Meta::Spec](http://search.cpan.org/perldoc?CPAN::Meta::Spec)
+[cpanfile](https://metacpan.org/pod/cpanfile), [CPAN::Meta](https://metacpan.org/pod/CPAN::Meta), [CPAN::Meta::Spec](https://metacpan.org/pod/CPAN::Meta::Spec)
