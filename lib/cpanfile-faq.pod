@@ -112,9 +112,17 @@ installation.
 L<Module::Build::Pluggable::CPANfile> merges C<cpanfile> dependencies
 from C<Build.PL> when dumping out MYMETA information.
 
+However you're recommended to switch to an authoring system that emits
+C<Build.PL> with parsed CPANfile information, like L<Dist::Zilla>
+mentioned above.
+
 =item ExtUtils::MakeMaker
 
 L<ExtUtils::MakeMaker::CPANfile> merges C<cpanfile> prerequisites
 when dumping C<MYMETA> files upon installation.
+
+However you're recommended to switch to an authoring system that emits
+C<Makefile.PL> with parsed CPANfile information, like L<Dist::Zilla>
+mentioned above.
 
 =back
