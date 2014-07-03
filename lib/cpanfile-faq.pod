@@ -114,10 +114,7 @@ from C<Build.PL> when dumping out MYMETA information.
 
 =item ExtUtils::MakeMaker
 
-L<ExtUtils::MakeMaker> has no direct support for cpanfile yet, but you
-could use L<Module::CPANfile>'s C<merge_meta> method to update
-C<MYMETA.json> files with the contents in C<cpanfile>, or convert the
-structure to appropriate options with L<PREREQ_PM> and C<META_MERGE>
-for C<WriteMakefile>.
+L<ExtUtils::MakeMaker::CPANfile> merges C<cpanfile> prerequisites
+when dumping C<MYMETA> files upon installation.
 
 =back
