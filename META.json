@@ -4,7 +4,7 @@
       "Tatsuhiko Miyagawa"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Milla version v1.0.4, Dist::Zilla version 5.006, CPAN::Meta::Converter version 2.133380",
+   "generated_by" : "Dist::Milla version v1.0.5, Dist::Zilla version 5.020, CPAN::Meta::Converter version 2.142060",
    "license" : [
       "perl_5"
    ],
@@ -26,7 +26,7 @@
    "prereqs" : {
       "configure" : {
          "requires" : {
-            "ExtUtils::MakeMaker" : "6.30"
+            "ExtUtils::MakeMaker" : "0"
          }
       },
       "develop" : {
@@ -50,7 +50,7 @@
          }
       }
    },
-   "release_status" : "testing",
+   "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
          "web" : "https://github.com/miyagawa/cpanfile/issues"
@@ -62,11 +62,13 @@
          "web" : "https://github.com/miyagawa/cpanfile"
       }
    },
-   "version" : "1.0905",
+   "version" : "1.1000",
    "x_contributors" : [
       "Atsushi Kato <ktat@cpan.org>",
       "David Golden <dagolden@cpan.org>",
       "David Steinbrunner <dsteinbrunner@pobox.com>",
+      "Gregory Oschwald <oschwald@gmail.com>",
+      "Kenichi Ishigaki <ishigaki@cpan.org>",
       "Masahiro Honma <hiratara@cpan.org>",
       "Michiel Beijen <michiel.beijen@gmail.com>",
       "grtodd <gtodd@iciti.ca>",

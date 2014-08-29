@@ -87,8 +87,8 @@ specific dependencies, not just for CPAN distributions.
         $file->save('cpanfile');
 
     Saves the currently loaded prereqs as a new `cpanfile` by calling
-    `to_string`. Beware __this method will overwrite the existing
-    cpanfile without any warning or backup__. Taking a backup or giving
+    `to_string`. Beware **this method will overwrite the existing
+    cpanfile without any warning or backup**. Taking a backup or giving
     warnings to users is a caller's responsibility.
 
         # Read MYMETA.json and creates a new cpanfile

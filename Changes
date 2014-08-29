@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+1.1000  2014-08-29 13:48:13 JST
+        - Make it non-development release
+
 1.0905  2013-12-09 16:26:08 PST
         - Support mirror syntax (masaki) #22
 
