@@ -4,8 +4,8 @@ cpanfile - A format for describing CPAN dependencies for Perl applications
 
 =head1 SYNOPSIS
 
-  requires 'Catalyst', '5.8000'; # 5.8000 or newer
-  requires 'Catalyst::View::JSON', '>= 0.30, < 0.40';
+  requires 'Plack', '1.0'; # 1.0 or newer
+  requires 'JSON', '>= 2.00, < 2.80';
 
   recommends 'JSON::XS', '2.0';
   conflicts 'JSON', '< 1.0';
