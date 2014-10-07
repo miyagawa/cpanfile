@@ -105,8 +105,9 @@ run.
 There are also tools to support converting cpanfile to CPAN toolchain
 compatible formats, such as L<Module::CPANfile>,
 L<Dist::Zilla::Plugin::Prereqs::FromCPANfile>,
-L<Module::Install::CPANfile>, so that C<cpanfile> can be used to
-describe dependencies for a CPAN distribution as well.
+L<Module::Install::CPANfile>, L<ExtUtils::MakeMaker::CPANfile>,
+so that C<cpanfile> can be used to describe dependencies
+for a CPAN distribution as well.
 
 =head1 AUTHOR
 
