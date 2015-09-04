@@ -4,13 +4,13 @@
       "Tatsuhiko Miyagawa"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Milla version v1.0.5, Dist::Zilla version 5.020, CPAN::Meta::Converter version 2.142060",
+   "generated_by" : "Dist::Zilla version 5.039, Dist::Milla version v1.0.15, CPAN::Meta::Converter version 2.150005",
    "license" : [
       "perl_5"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : "2"
+      "version" : 2
    },
    "name" : "Module-CPANfile",
    "no_index" : {
@@ -31,6 +31,7 @@
       },
       "develop" : {
          "requires" : {
+            "Dist::Milla" : "v1.0.15",
             "Test::Pod" : "1.41"
          }
       },
@@ -62,17 +63,18 @@
          "web" : "https://github.com/miyagawa/cpanfile"
       }
    },
-   "version" : "1.1000",
+   "version" : "1.1001",
    "x_contributors" : [
       "Atsushi Kato <ktat@cpan.org>",
       "David Golden <dagolden@cpan.org>",
       "David Steinbrunner <dsteinbrunner@pobox.com>",
       "Gregory Oschwald <oschwald@gmail.com>",
+      "grtodd <gtodd@iciti.ca>",
+      "ikasam_a <masaki.nakagawa@gmail.com>",
       "Kenichi Ishigaki <ishigaki@cpan.org>",
       "Masahiro Honma <hiratara@cpan.org>",
       "Michiel Beijen <michiel.beijen@gmail.com>",
-      "grtodd <gtodd@iciti.ca>",
-      "ikasam_a <masaki.nakagawa@gmail.com>"
+      "Tatsuhiko Miyagawa <miyagawa@bulknews.net>"
    ]
 }
 

@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+1.1001  2015-09-04 14:07:14 CEST
+        - Fixed tests to avoid using subtests. #38
+
 1.1000  2014-08-29 13:48:13 JST
         - Make it non-development release
 
