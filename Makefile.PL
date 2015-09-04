@@ -28,7 +28,7 @@ my %WriteMakefileArgs = (
     "parent" => 0
   },
   "TEST_REQUIRES" => {
-    "Test::More" => "0.88"
+    "Test::More" => "0.98"
   },
   "VERSION" => "1.1000",
   "test" => {
@@ -40,7 +40,7 @@ my %WriteMakefileArgs = (
 my %FallbackPrereqs = (
   "CPAN::Meta" => "2.12091",
   "CPAN::Meta::Prereqs" => "2.12091",
-  "Test::More" => "0.88",
+  "Test::More" => "0.98",
   "parent" => 0
 );
 
