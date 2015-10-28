@@ -108,6 +108,8 @@ L<Dist::Zilla::Plugin::Prereqs::FromCPANfile>,
 L<Module::Install::CPANfile>, so that C<cpanfile> can be used to
 describe dependencies for a CPAN distribution as well.
 
+The L<cpanfile-dump> tool can be used to dump dependencies.
+
 =head1 AUTHOR
 
 Tatsuhiko Miyagawa
