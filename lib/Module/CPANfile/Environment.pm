@@ -98,8 +98,9 @@ sub feature {
 sub osname { die "TODO" }
 
 sub mirror {
-    my($self, $url) = @_;
+    my($self, $url, $code) = @_;
     push @{$self->{mirrors}}, $url;
+    $code->() if(defined $code && ref $code eq 'CODE');
 }
 
 sub requirement_for {

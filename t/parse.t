@@ -33,11 +33,18 @@ FILE
     my $r = write_cpanfile(<<FILE);
 configure_requires 'ExtUtils::MakeMaker', 5.5;
 
-requires 'DBI';
+#requires 'DBI';
 requires 'Plack', '0.9970';
 conflicts 'Moose', '< 0.8';
 
+mirror 'darkpan' => sub {
+    requires 'DBI';
+};
+
 on 'test' => sub {
+    mirror 'darkpan' => sub {
+        requires 'Test::Roo';
+    };
     requires 'Test::More';
 };
 
@@ -58,7 +65,7 @@ FILE
             requires => { 'ExtUtils::MakeMaker' => '5.5' },
         },
         test => {
-            requires => { 'Test::More' => 0, 'Test::Warn' => '0.1' },
+            requires => { 'Test::More' => 0, 'Test::Warn' => '0.1', 'Test::Roo' => 0 },
         },
         runtime => {
             requires => { 'Plack' => '0.9970', 'DBI' => 0 },
