@@ -36,6 +36,12 @@ sub parse {
         join '', <$fh>;
     };
 
+    if (${^TAINT}) {
+        # untaint in taint mode
+        ($file) = $file =~ /^(.+)$/s;
+        ($code) = $code =~ /^(.+)$/s;
+    }
+
     my $env = Module::CPANfile::Environment->new($file);
     $env->parse($code) or die $@;
 
