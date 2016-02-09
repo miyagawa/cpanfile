@@ -17,7 +17,7 @@ sub load {
     my($proto, $file) = @_;
 
     my $self = ref $proto ? $proto : $proto->new;
-    $self->parse($file || Cwd::abs_path('cpanfile'));
+    $self->parse($file || _default_cpanfile());
     $self;
 }
 
@@ -38,7 +38,6 @@ sub parse {
 
     if (${^TAINT}) {
         # untaint in taint mode
-        ($file) = $file =~ /^(.+)$/s;
         ($code) = $code =~ /^(.+)$/s;
     }
 
@@ -136,6 +135,14 @@ sub _dump {
     require Data::Dumper;
     chomp(my $value = Data::Dumper->new([$str])->Terse(1)->Dump);
     $value;
+}
+
+sub _default_cpanfile {
+    my $file = Cwd::abs_path('cpanfile');
+    if (${^TAINT}) {
+        ($file) = $file =~ /^(.+)$/s;
+    }
+    return $file;
 }
 
 sub to_string {
