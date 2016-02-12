@@ -6,7 +6,7 @@ use Carp ();
 use Module::CPANfile::Environment;
 use Module::CPANfile::Requirement;
 
-our $VERSION = '1.1001';
+our $VERSION = '1.1002';
 
 BEGIN {
     if (${^TAINT}) {

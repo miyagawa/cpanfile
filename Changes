@@ -2,6 +2,9 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+1.1002  2016-02-12 08:23:00 PST
+        - Make it work under the taint mode (-T) #41
+
 1.1001  2015-09-04 14:07:14 CEST
         - Fixed tests to avoid using subtests. #38
 
