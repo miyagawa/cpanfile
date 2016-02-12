@@ -8,6 +8,18 @@ use Module::CPANfile::Requirement;
 
 our $VERSION = '1.1001';
 
+BEGIN {
+    if (${^TAINT}) {
+        *untaint = sub {
+            my $str = shift;
+            ($str) = $str =~ /^(.+)$/s;
+            $str;
+        };
+    } else {
+        *untaint = sub { $_[0] };
+    }
+}
+
 sub new {
     my($class, $file) = @_;
     bless {}, $class;
@@ -36,10 +48,7 @@ sub parse {
         join '', <$fh>;
     };
 
-    if (${^TAINT}) {
-        # untaint in taint mode
-        ($code) = $code =~ /^(.+)$/s;
-    }
+    $code = untaint $code;
 
     my $env = Module::CPANfile::Environment->new($file);
     $env->parse($code) or die $@;
@@ -139,10 +148,7 @@ sub _dump {
 
 sub _default_cpanfile {
     my $file = Cwd::abs_path('cpanfile');
-    if (${^TAINT}) {
-        ($file) = $file =~ /^(.+)$/s;
-    }
-    return $file;
+    untaint $file;
 }
 
 sub to_string {
