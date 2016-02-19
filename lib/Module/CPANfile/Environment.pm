@@ -9,6 +9,7 @@ my @bindings = qw(
     feature
     osname
     mirror
+    source
     configure_requires build_requires test_requires author_requires
 );
 
@@ -100,7 +101,13 @@ sub osname { die "TODO" }
 sub mirror {
     my($self, $url, $code) = @_;
     push @{$self->{mirrors}}, $url;
-    $code->() if(defined $code && ref $code eq 'CODE');
+    $self->source($url,$code) if(defined $code && ref $code eq 'CODE');
+}
+
+sub source {
+    my($self, $url, $code) = @_;
+    local $self->{mirrors} = $url;
+    $code->();
 }
 
 sub requirement_for {
@@ -145,6 +152,7 @@ sub add_prereq {
         type    => $type,
         module  => $module,
         requirement => $self->requirement_for($module, @args),
+        mirrors => $self->{mirrors},
     );
 }
 
