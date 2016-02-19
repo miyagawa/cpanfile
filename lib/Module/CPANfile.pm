@@ -189,20 +189,38 @@ sub _dump_prereqs {
 
     my $code = '';
     for my $phase (qw(runtime configure build test develop)) {
-        my $indent = $phase eq 'runtime' ? '' : '    ';
-        $indent = (' ' x ($base_indent || 0)) . $indent;
+        my $indent = ($base_indent || 0) + ($phase eq 'runtime' ? 0 : 4);
 
         my($phase_code, $requirements);
         $phase_code .= "on $phase => sub {\n" unless $phase eq 'runtime';
 
+        my $source_hash = {};
+        my $default_mirrors_str = '\''.join ('\',\'',sort @{$self->mirrors}).'\'';
+
         for my $type (qw(requires recommends suggests conflicts)) {
             for my $mod (sort keys %{$prereqs->{$phase}{$type}}) {
+                my $prereq = $self->{_prereqs}->find($mod);
+                my $source_mirrors_str = '\''.join ('\',\'',sort @{$prereq->mirrors}).'\'';
                 my $ver = $prereqs->{$phase}{$type}{$mod};
-                $phase_code .= $ver eq '0'
-                             ? "${indent}$type '$mod';\n"
-                             : "${indent}$type '$mod', '$ver';\n";
+                if (scalar($prereq->mirrors) == 0 || $source_mirrors_str eq $default_mirrors_str) {
+                    $phase_code .= $self->_dump_module($indent, $type, $mod, $ver);
+                } else {
+                    $source_hash->{$source_mirrors_str}{$type}{$mod} = $ver;
+                }
                 $requirements++;
             }
+        }
+
+        for my $source_mirrors_str (keys %{$source_hash}) {
+            my $mirror_indent = (' ' x ($indent || 0));
+            $phase_code .= $mirror_indent."source [$source_mirrors_str] {\n";
+            for my $type (keys %{$source_hash->{$source_mirrors_str}}){
+                for my $mod (sort keys %{$source_hash->{$source_mirrors_str}{$type}}){
+                    my $ver = $source_hash->{$source_mirrors_str}{$type}{$mod};
+                    $phase_code .= $self->_dump_module($indent + 4, $type, $mod, $ver);
+                }
+            }
+            $phase_code .= $mirror_indent."};\n";
         }
 
         $phase_code .= "\n" unless $requirements;
@@ -213,6 +231,14 @@ sub _dump_prereqs {
 
     $code =~ s/\n+$/\n/s;
     $code;
+}
+
+sub _dump_module {
+    my ($self, $indent, $type, $mod, $ver) = @_;
+    $indent = (' ' x ($indent || 0));
+    return $ver eq '0'
+                 ? "${indent}$type '$mod';\n"
+                 : "${indent}$type '$mod', '$ver';\n";
 }
 
 1;

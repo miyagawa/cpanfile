@@ -10,6 +10,9 @@ requires 'perl', '5.008001';
 requires 'DBI';
 requires 'Plack', '1.0001';
 test_requires 'Test::More', '0.90, != 0.91';
+source ['darkpan'] => sub {
+    requires 'Moo';
+};
 FILE
 
     my $prereqs = Module::CPANfile->load->prereqs;
@@ -19,6 +22,7 @@ FILE
 
     is $file->to_string, <<FILE;
 requires 'DBI';
+requires 'Moo';
 requires 'Plack', '1.0001';
 requires 'perl', '5.008001';
 

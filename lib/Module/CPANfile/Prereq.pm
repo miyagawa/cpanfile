@@ -11,6 +11,7 @@ sub phase   { $_[0]->{phase} }
 sub type    { $_[0]->{type} }
 sub module  { $_[0]->{module} }
 sub requirement { $_[0]->{requirement} }
+sub mirrors { ($_[0]->{mirrors} || []) }
 
 sub match_feature {
     my($self, $identifier) = @_;

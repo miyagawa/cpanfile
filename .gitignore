@@ -5,3 +5,9 @@ Makefile
 /Module-CPANfile-*
 /.build
 !META.json
+.perl-version
+/blib
+/local
+*.swp
+cpanfile.snapshot
+/pm_to_blib
