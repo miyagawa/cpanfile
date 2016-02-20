@@ -162,8 +162,8 @@ sub to_string {
     $code .= $self->_dump_prereqs($prereqs, $include_empty);
 
     for my $feature ($self->features) {
-        $code .= sprintf "feature %s, %s => sub {\n", _dump($feature->{identifier}), _dump($feature->{description});
-        $code .= $self->_dump_prereqs($feature->{spec}, $include_empty, 4);
+        $code .= sprintf "feature %s, %s => sub {\n", _dump($feature->identifier), _dump($feature->description);
+        $code .= $self->_dump_prereqs($feature->prereqs->as_string_hash, $include_empty, 4);
         $code .= "}\n\n";
     }
 
