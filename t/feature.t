@@ -20,6 +20,21 @@ FILE
 }
 
 {
+    my $content = <<FILE;
+feature 'mysql', 'MySQL' => sub {
+    requires 'DBD::mysql';
+};
+
+feature 'sqlite', 'SQLite' => sub {
+    requires 'DBD::SQLite';
+};
+FILE
+    my $r = write_cpanfile($content);
+    my $cpanfile = Module::CPANfile->load;
+    is $cpanfile->to_string, $content;
+}
+
+{
     my $r = write_cpanfile(<<FILE);
 on test => sub {
   requires 'Test::More', '0.90';
