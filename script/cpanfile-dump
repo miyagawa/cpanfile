@@ -5,8 +5,8 @@ use CPAN::Meta::Requirements;
 use Module::CPANfile;
 use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat);
 
-my @phases = qw(configure build test develop runtime);
-my @types  = qw(requires recommends suggests conflicts);
+my @phases    = qw(configure build test develop runtime);
+my @types     = qw(requires recommends suggests conflicts);
 my @output_as = qw(string cpanfile cpanm);
 
 my %o = map { $_ => 1 } qw/configure build test runtime requires recommends/;
@@ -34,7 +34,7 @@ if ($o{help}) {
         die "Usage: cpanfile-dump\n\nSee perldoc cpanfile-dump for more details.\n";
     }
 }
- 
+
 my $file = Module::CPANfile->load("cpanfile");
 
 my %excludes = map { $_ => 1 } @{$o{without}};
@@ -101,7 +101,7 @@ cpanfile-dump - Dump prerequisites from a cpanfile
   # Skip configures phase
   cpan `cpanfile-dump --no-configure`
 
-  # Also include develop phase and suggests type 
+  # Also include develop phase and suggests type
   cpan `cpanfile-dump --develop --suggests`
 
   # Include a feature
