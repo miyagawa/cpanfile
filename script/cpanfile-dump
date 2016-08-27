@@ -7,6 +7,7 @@ use Getopt::Long qw(:config posix_default no_ignore_case gnu_compat);
 
 my @phases = qw(configure build test develop runtime);
 my @types  = qw(requires recommends suggests conflicts);
+my @output_as = qw(string cpanfile cpanm);
 
 my %o = map { $_ => 1 } qw/configure build test runtime requires recommends/;
 
@@ -15,8 +16,12 @@ GetOptions(
     "with-feature=s@",      \$o{with},
     "without-feature=s@",   \$o{without},
     "with-all-features",    \$o{with_all},
+    ( map { ( "as-$_", \$o{"as_$_"} ) } (@output_as) ),
     map { ("$_!", \$o{$_}) } (@phases, @types),
 );
+
+$o{as_string} = 1
+    if (!$o{as_string} && !$o{as_cpanfile} && !$o{as_cpanm});
 
 if ($o{conflicts}) {
     delete $o{$_} for qw/requires recommends suggests/;
@@ -49,8 +54,38 @@ for my $phase ( @phases ) {
     }
 }
 
-print "$_\n" for sort $merged->required_modules;
+if ($o{as_string}) {
+    print "$_\n" for sort $merged->required_modules;
+}
 
+my $versions = $merged->as_string_hash;
+
+if ($o{as_cpanfile}) {
+    foreach my $pkg (sort { $a cmp $b } keys %{$versions}) {
+        next if $pkg eq 'perl';
+
+        my $ver_str = $versions->{$pkg};
+
+        print qq{requires '$pkg'};
+        print qq{, '$ver_str'} if $ver_str;
+        print qq{;\n};
+    }
+}
+
+if ($o{as_cpanm}) {
+    # "~" specifies the version requirement in the CPAN::Meta::Spec format
+    foreach my $pkg (sort { $a cmp $b } keys %{$versions}) {
+        next if $pkg eq 'perl';
+
+        my $ver_str = q{};
+        if ($versions->{$pkg}) {
+            my $qq = -t STDOUT ? q{"} : q{};
+            $ver_str .= q{~} . $qq . $versions->{$pkg} . $qq;
+        }
+
+        print qq{${pkg}${ver_str}\n};
+    }
+}
 
 __END__
 
@@ -112,6 +147,10 @@ on the command line).
 Specify features to include in the dump.  C<--with-feature> and C<--without-feature>
 may be used more than once.
 
+=item --as-string, --as-cpanfile, --as-cpanm
+
+output format. if no option is specified, C<--as-string> is selected
+
 =back
 
 =head1 NOTES
@@ -128,4 +167,3 @@ David Golden
 L<Module::CPANfile> L<cpanfile> L<App::mymeta_requires>
 
 =cut
-
