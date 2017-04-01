@@ -1,6 +1,7 @@
 use strict;
 use Module::CPANfile;
 use Test::More;
+use lib ".";
 use t::Utils;
 
 {

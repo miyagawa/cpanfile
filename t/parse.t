@@ -2,6 +2,7 @@ use strict;
 use Module::CPANfile;
 use Test::More;
 use POSIX qw(locale_h);
+use lib ".";
 use t::Utils;
 
 {

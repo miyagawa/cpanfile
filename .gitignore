@@ -5,3 +5,5 @@ Makefile
 /Module-CPANfile-*
 /.build
 !META.json
+/blib
+pm_to_blib
