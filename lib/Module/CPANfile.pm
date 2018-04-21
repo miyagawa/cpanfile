@@ -339,6 +339,25 @@ given META file, using CPAN::Meta. You can specify the META spec
 version in the second argument, which defaults to 1.4 in case the
 given file is YAML, and 2 if it is JSON.
 
+=item options_for_module
+
+  my $options = $file->options_for_module($module);
+
+Returns the extra options specified for a given module as a hash
+reference. Returns C<undef> when the given module is not specified in
+the C<cpanfile>.
+
+For example,
+
+  # cpanfile
+  requires 'Plack', '1.000',
+    dist => "MIYAGAWA/Plack-1.000.tar.gz";
+
+  # ...
+  my $file = Module::CPANfile->load;
+  my $options = $file->options_for_module('Plack');
+  # => { dist => "MIYAGAWA/Plack-1.000.tar.gz" }
+
 =back
 
 =head1 AUTHOR
