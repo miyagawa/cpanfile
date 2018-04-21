@@ -139,10 +139,9 @@ sub merge_meta {
     CPAN::Meta->new($struct)->save($file, { version => $version });
 }
 
-sub _dump {
-    my $str = shift;
+sub _d($) {
     require Data::Dumper;
-    chomp(my $value = Data::Dumper->new([$str])->Terse(1)->Dump);
+    chomp(my $value = Data::Dumper->new([$_[0]])->Terse(1)->Dump);
     $value;
 }
 
@@ -162,9 +161,9 @@ sub to_string {
     $code .= $self->_dump_prereqs($prereqs, $include_empty);
 
     for my $feature ($self->features) {
-        $code .= sprintf "feature %s, %s => sub {\n", _dump($feature->{identifier}), _dump($feature->{description});
+        $code .= "feature @{[ _d $feature->{identifier} ]}, @{[ _d $feature->{description} ]} => sub {\n";
         $code .= $self->_dump_prereqs($feature->{spec}, $include_empty, 4);
-        $code .= "}\n\n";
+        $code .= "};\n\n";
     }
 
     $code =~ s/\n+$/\n/s;
@@ -177,7 +176,7 @@ sub _dump_mirrors {
     my $code = "";
 
     for my $url (@$mirrors) {
-        $code .= "mirror '$url';\n";
+        $code .= "mirror @{[ _d $url ]};\n";
     }
 
     $code =~ s/\n+$/\n/s;
@@ -190,7 +189,7 @@ sub _dump_prereqs {
     my $code = '';
     for my $phase (qw(runtime configure build test develop)) {
         my $indent = $phase eq 'runtime' ? '' : '    ';
-        $indent = (' ' x ($base_indent || 0)) . $indent;
+        $indent .= (' ' x ($base_indent || 0));
 
         my($phase_code, $requirements);
         $phase_code .= "on $phase => sub {\n" unless $phase eq 'runtime';
@@ -199,8 +198,8 @@ sub _dump_prereqs {
             for my $mod (sort keys %{$prereqs->{$phase}{$type}}) {
                 my $ver = $prereqs->{$phase}{$type}{$mod};
                 $phase_code .= $ver eq '0'
-                             ? "${indent}$type '$mod';\n"
-                             : "${indent}$type '$mod', '$ver';\n";
+                             ? "${indent}$type @{[ _d $mod ]};\n"
+                             : "${indent}$type @{[ _d $mod ]}, @{[ _d $ver ]};\n";
                 $requirements++;
             }
         }
