@@ -2,6 +2,11 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+1.1003  2018-04-22 01:54:46 CEST
+        - Make options written back with save()
+        - Documented options_for_module method
+        - Internal refactoring
+
 1.1002  2016-02-12 08:23:00 PST
         - Make it work under the taint mode (-T) #41
 

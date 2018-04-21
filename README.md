@@ -106,6 +106,25 @@ specific dependencies, not just for CPAN distributions.
     version in the second argument, which defaults to 1.4 in case the
     given file is YAML, and 2 if it is JSON.
 
+- options\_for\_module
+
+        my $options = $file->options_for_module($module);
+
+    Returns the extra options specified for a given module as a hash
+    reference. Returns `undef` when the given module is not specified in
+    the `cpanfile`.
+
+    For example,
+
+        # cpanfile
+        requires 'Plack', '1.000',
+          dist => "MIYAGAWA/Plack-1.000.tar.gz";
+
+        # ...
+        my $file = Module::CPANfile->load;
+        my $options = $file->options_for_module('Plack');
+        # => { dist => "MIYAGAWA/Plack-1.000.tar.gz" }
+
 # AUTHOR
 
 Tatsuhiko Miyagawa
