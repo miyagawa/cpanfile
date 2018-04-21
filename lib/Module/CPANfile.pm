@@ -101,10 +101,8 @@ sub effective_prereqs {
 sub prereqs_with {
     my($self, @feature_identifiers) = @_;
 
-    my $prereqs = $self->prereqs;
     my @others = map { $self->feature($_)->prereqs } @feature_identifiers;
-
-    $prereqs->with_merged_prereqs(\@others);
+    $self->prereqs->with_merged_prereqs(\@others);
 }
 
 sub prereq_specs {
