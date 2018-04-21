@@ -196,8 +196,21 @@ sub _dump_prereqs {
             for my $mod (sort keys %{$prereqs->{$phase}{$type}}) {
                 my $ver = $prereqs->{$phase}{$type}{$mod};
                 $phase_code .= $ver eq '0'
-                             ? "${indent}$type @{[ _d $mod ]};\n"
-                             : "${indent}$type @{[ _d $mod ]}, @{[ _d $ver ]};\n";
+                             ? "${indent}$type @{[ _d $mod ]}"
+                             : "${indent}$type @{[ _d $mod ]}, @{[ _d $ver ]}";
+
+                my $options = $self->options_for_module($mod) || {};
+                if (%$options) {
+                    my @opts;
+                    for my $key (keys %$options) {
+                        my $k = $key =~ /^[a-zA-Z0-9_]+$/ ? $key : _d $key;
+                        push @opts, "$k => @{[ _d $options->{$k} ]}";
+                    }
+
+                    $phase_code .= ",\n" . join(",\n", map "  $indent$_", @opts);
+                }
+
+                $phase_code .= ";\n";
                 $requirements++;
             }
         }
