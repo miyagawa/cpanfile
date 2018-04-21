@@ -10,6 +10,3 @@ perl:
   - 5.14
   - 5.12
   - 5.10
-env:
-  global:
-    - PERL_USE_UNSAFE_INC=1

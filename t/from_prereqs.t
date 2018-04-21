@@ -2,6 +2,7 @@ use strict;
 use Test::More;
 
 use Module::CPANfile;
+use lib ".";
 use t::Utils;
 
 {
