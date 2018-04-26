@@ -2,6 +2,10 @@ Revision history for Module::Install::CPANfile
 
 {{$NEXT}}
 
+1.1004  2018-04-26 02:07:14 PDT
+        - Fix a bug in to_strings with empty feature block (charsbar) #50
+        - Explicitly add . in tests for perl 5.26
+
 1.1003  2018-04-22 01:54:46 CEST
         - Make options written back with save()
         - Documented options_for_module method
