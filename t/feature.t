@@ -83,6 +83,7 @@ FILE
     }
 
     like $cpanfile->to_string, qr/feature/;
+    like $cpanfile->to_string, qr/DBD::SQLite/;
 }
 
 done_testing;
