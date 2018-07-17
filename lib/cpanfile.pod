@@ -23,6 +23,9 @@ cpanfile - A format for describing CPAN dependencies for Perl applications
     recommends 'DBD::SQLite';
   };
 
+  requires 'App::cpanminus',
+    dist => 'MIYAGAWA/App-cpanminus-1.7907-TRIAL.tar.gz';
+
 =head1 VERSION
 
 This document describes cpanfile format version 1.0.
@@ -38,7 +41,7 @@ Perl code.
 
 =item requires, recommends, suggests, conflicts
 
-  requires $module, $version_requirement;
+  requires $module, $version_requirement, %options;
 
 Describes the requirement for a module. See L<CPAN::Meta::Spec> for
 the meanings of each requirement type.
@@ -55,6 +58,10 @@ Note that, per L<CPAN::Meta::Spec>, when a plain version number is
 given, it means the version I<or newer> is required. If you want a
 specific version for a module, use the specific range syntax, i.e.
 C< == 2.1 >.
+
+Options can be passed as key-value pairs following the optional
+version requirement. The interpretation of these depends on the
+tool reading the cpanfile, such as L<cpanm>.
 
 =item on
 
