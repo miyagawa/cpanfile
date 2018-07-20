@@ -33,6 +33,20 @@ sub load {
     $self;
 }
 
+sub from_string {
+    my($proto, $code, $file) = @_;
+    $file = 'cpanfile' unless defined $file;
+
+    my $self = ref $proto ? $proto : $proto->new;
+
+    my $env = Module::CPANfile::Environment->new($file);
+    $env->parse($code) or die $@;
+
+    $self->{_mirrors} = $env->mirrors;
+    $self->{_prereqs} = $env->prereqs;
+    $self;
+}
+
 sub save {
     my($self, $path) = @_;
 
@@ -50,11 +64,7 @@ sub parse {
 
     $code = untaint $code;
 
-    my $env = Module::CPANfile::Environment->new($file);
-    $env->parse($code) or die $@;
-
-    $self->{_mirrors} = $env->mirrors;
-    $self->{_prereqs} = $env->prereqs;
+    $self->from_string($code, $file);
 }
 
 sub from_prereqs {
@@ -261,6 +271,12 @@ specific dependencies, not just for CPAN distributions.
 
 Load and parse a cpanfile. By default it tries to load C<cpanfile> in
 the current directory, unless you pass the path to its argument.
+
+=item from_string
+
+  $file = Module::CPANfile->from_string($s);
+
+Parse a string.
 
 =item from_prereqs
 
