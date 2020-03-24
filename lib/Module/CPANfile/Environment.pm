@@ -98,8 +98,13 @@ sub feature {
 sub osname { die "TODO" }
 
 sub mirror {
-    my($self, $url) = @_;
-    push @{$self->{mirrors}}, $url;
+    my($self, $url, $code) = @_;
+    if ($code) {
+        local $self->{mirrors} = [$url];
+        $code->();
+    } else {
+        push @{$self->{mirrors}}, $url;
+    }
 }
 
 sub requirement_for {
@@ -137,6 +142,9 @@ sub conflicts {
 
 sub add_prereq {
     my($self, $type, $module, @args) = @_;
+
+    my $mirrors = $self->mirrors;
+    splice @args, (@args % 2), 0, mirror => $mirrors->[-1] if @$mirrors;
 
     $self->prereqs->add(
         feature => $self->{feature},
