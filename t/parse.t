@@ -72,4 +72,16 @@ FILE
     };
 }
 
+subtest 'validate on phase names' => sub {
+    my $r = write_cpanfile(<<FILE);
+requires 'Ok';
+on question => sub {
+    suggests Answer => 42;
+};
+FILE
+
+    my $file = eval { Module::CPANfile->load; };
+    like $@, qr/Phase 'question' not recognised/, 'question is not known';
+};
+
 done_testing;

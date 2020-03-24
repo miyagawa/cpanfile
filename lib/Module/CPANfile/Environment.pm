@@ -68,10 +68,16 @@ sub prereqs { $_[0]->{prereqs} }
 
 sub mirrors { $_[0]->{mirrors} }
 
+sub _validate_phase {
+    die "Phase '$_' not recognised"
+        unless !!($_ =~ qr/^(configure|build|develop|runtime|test)$/);
+}
+
 # DSL goes from here
 
 sub on {
     my($self, $phase, $code) = @_;
+    _validate_phase() for $phase;
     local $self->{phase} = $phase;
     $code->();
 }
