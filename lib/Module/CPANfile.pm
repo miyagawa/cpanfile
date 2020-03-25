@@ -231,7 +231,7 @@ sub _dump_prereqs {
                              ? "${indent}$type @{[ _d $mod ]}"
                              : "${indent}$type @{[ _d $mod ]}, @{[ _d $ver ]}";
 
-                my $options = $self->options_for_module($mod) || {};
+                my $options = { %{$self->options_for_module($mod) || {}} };
 
                 # mirror only options handled as mirror 'url' => sub { ... };
                 delete($options->{mirror})

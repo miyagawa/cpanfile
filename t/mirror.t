@@ -83,25 +83,31 @@ FILE
     my $mirrors = $file->mirrors;
     is_deeply $mirrors, ['https://backpan.perl.org'], 'correct mirror';
 
+    is_deeply $file->options_for_module('Hash::MultiValue'), {
+        mirror => 'https://backpan.perl.org'}, 'correct options';
+    is_deeply $file->options_for_module('Cookie::Monster'), {
+        'mirror' => 'http://cpan.monstrous.com',
+        'url'    => 'http://cpan.monstrous.com/cpan/authors/id/C/CO/COO/Cookie-Monster-0.01.tar.gz'
+    }, 'options';
+
     # test comprehension and round trip.
-    my $file_string = $file->to_string;
-    like $file_string, qr{^requires 'Try::Tiny';}s, 'no mirror - first thing';
-    like $file_string, qr{mirror 'http://pause\.local' => sub \{}, 'block start';
-    like $file_string, qr{mirror 'http://cpan.monstrous.com' => sub \{
+    like $file->to_string, qr{^requires 'Try::Tiny';}s, 'no mirror - first thing';
+    like $file->to_string, qr{mirror 'http://pause\.local' => sub \{}, 'block start';
+    like $file->to_string, qr{mirror 'http://cpan.monstrous.com' => sub \{
 \s+requires 'Cookie::Monster', '0.01',
 \s+url => 'http://cpan.monstrous.com/cpan/authors/id/C/CO/COO/Cookie-Monster-0.01.tar.gz';
 \s*\}}m, 'mirror block with url - n.b. mirror will likely be ignored by cpanm';
 
-    like $file_string,
+    like $file->to_string,
         qr{mirror 'https://backpan.perl.org';\nrequires 'Hash::MultiValue', '0.08';}m,
         'file level mirror';
 
-    like $file_string, qr{on test => sub \{
+    like $file->to_string, qr{on test => sub \{
 \s+requires 'Test::More', '0.83',
 \s+mirror => 'https://cpantesters.org';
 \s*\};}m, 'mirror options included';
 
-    # diag $file_string;
+    # diag $file->to_string;
 };
 
 subtest 'mirror scope for on block' => sub {
@@ -125,10 +131,9 @@ FILE
     # mirror remains file scope despite apparent ANON sub scope.
     is_deeply $mirrors, ['https://pause.local'], 'no blocks mark scope level';
 
-    my $file_string = $file->to_string;
-    like $file_string, qr{^mirror 'https://pause\.local';}s, 'DSL limitation';
-    like $file_string, qr{mirror => 'https://pause\.local';}, 'unfortunate duplication';
-    # diag $file_string;
+    like $file->to_string, qr{^mirror 'https://pause\.local';}s, 'DSL limitation';
+    like $file->to_string, qr{mirror => 'https://pause\.local';}, 'unfortunate duplication';
+    # diag $file->to_string;
 };
 
 
@@ -165,7 +170,8 @@ FILE
     is_deeply $mirrors, ['https://pause.local'], 'no blocks mark scope level';
 
     my $file_string = $file->to_string;
-    is $file_string, <<'EOF', 'blocks preferred, options "promoted"';
+    ok $file_string, 'check recallable';
+    is $file->to_string, <<'EOF', 'blocks preferred, options "promoted"';
 mirror 'http://darkpan.company.com' => sub {
     requires 'XYZ';
 };
@@ -181,6 +187,42 @@ on develop => sub {
       mirror => 'https://pause.local';
 };
 EOF
+};
+
+
+subtest 'which mirror wins' => sub {
+    my $r = write_cpanfile(<<FILE);
+mirror 'http://darkpan.company.com';
+
+requires 'ABC';
+requires 'XYZ',
+    mirror => 'https://pause.local';
+requires 'LMNO' => '2.1';
+FILE
+
+    my $file = Module::CPANfile->load;
+    is_deeply $file->prereq->as_string_hash, {
+        runtime => {
+            requires => {ABC => 0, LMNO => '2.1', XYZ => 0}
+        },
+    };
+
+    is_deeply $file->mirrors, ['http://darkpan.company.com'], 'one mirror';
+    is_deeply $file->options_for_module('ABC'), {
+        mirror => 'http://darkpan.company.com',
+    }, 'preceeding mirror';
+    is_deeply $file->options_for_module('XYZ'), {
+        mirror => 'https://pause.local',
+    }, 'specific';
+    is_deeply $file->options_for_module('LMNO'), {
+        mirror => 'http://darkpan.company.com',
+    }, 'original';
+
+    # call multiple times (delete mirror vs options_for_module copy)
+    like $file->to_string, qr/requires 'ABC';/;
+    like $file->to_string, qr/requires 'LMNO', '2.1';/;
+    like $file->to_string, qr{mirror 'http://darkpan.company.com';};
+    like $file->to_string, qr{mirror 'https://pause\.local' => sub};
 };
 
 
