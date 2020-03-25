@@ -155,7 +155,7 @@ sub to_string {
     my $prereqs = $self->prereq_specs;
 
     my $code = '';
-    $code .= $self->_dump_mirrors($mirrors);
+    $code .= $self->_dump_mirrors($mirrors, $prereqs);
     $code .= $self->_dump_prereqs($prereqs, $include_empty);
 
     for my $feature ($self->features) {
@@ -169,9 +169,41 @@ sub to_string {
 }
 
 sub _dump_mirrors {
-    my($self, $mirrors) = @_;
+    my ($self, $mirrors, $prereqs) = @_;
 
     my $code = "";
+    my ($nomirror, %bymirror) = '__no_mirror__';
+    if (@$mirrors) {
+
+        # reshape runtime phases to key on mirror url
+        for my $phase (qw(runtime)) {
+            for my $type (qw(requires recommends suggests conflicts)) {
+                for my $mod(sort keys %{$prereqs->{$phase}{$type}}) {
+                    my $options = $self->options_for_module($mod) || {};
+                    my $mirror  = $options->{mirror} || $nomirror;
+                    $bymirror{$mirror}{$phase}{$type}{$mod} =
+                        $prereqs->{$phase}{$type}{$mod};
+                    delete $prereqs->{$phase}{$type}{$mod} if $mirror eq $nomirror;
+                }
+            }
+        }
+
+        # write those without a mirror first - (occur before 'mirror' statement)
+        $code .= $self->_dump_prereqs(delete($bymirror{$nomirror}), 0, 0)
+            if $bymirror{$nomirror};
+    }
+
+    # remove file scope mirrors to process mirror blocks and mirror options
+    delete @bymirror{@$mirrors};
+
+    # mirror 'url' => sub { };
+    for my $url(sort keys %bymirror) {
+        $code .= "mirror '$url' => sub {\n";
+        $code .= $self->_dump_prereqs($bymirror{$url}, 0, 4);
+        delete(@{$prereqs->{runtime}{$_}}{keys %{$bymirror{$url}{runtime}{$_}}})
+            for (qw(requires recommends suggests conflicts));
+        $code .= "};\n";
+    }
 
     for my $url (@$mirrors) {
         $code .= "mirror @{[ _d $url ]};\n";
@@ -199,10 +231,14 @@ sub _dump_prereqs {
                              ? "${indent}$type @{[ _d $mod ]}"
                              : "${indent}$type @{[ _d $mod ]}, @{[ _d $ver ]}";
 
-                my $options = $self->options_for_module($mod) || {};
+                my $options = { %{$self->options_for_module($mod) || {}} };
+
+                # mirror only options handled as mirror 'url' => sub { ... };
+                delete($options->{mirror})
+                    if ($phase eq 'runtime' && !exists $options->{dist});
                 if (%$options) {
                     my @opts;
-                    for my $key (keys %$options) {
+                    for my $key (sort keys %$options) {
                         my $k = $key =~ /^[a-zA-Z0-9_]+$/ ? $key : _d $key;
                         push @opts, "$k => @{[ _d $options->{$k} ]}";
                     }

@@ -88,6 +88,21 @@ L<CPAN::Meta::Spec/optional_features> for more details.
 Shortcut for C<requires> in specific phase. This is mainly provided
 for compatibilities with L<Module::Install> DSL.
 
+=item mirror
+
+  # file level mirrors - last until next mirror or EOF
+  mirror 'https://backpan.perl.org';
+  requires 'LWP::Parallel' => '== 2.34';
+  # change mirror
+  mirror 'https://cpan.metacpan.org';
+  requires 'DBD::SQLite' => '1.60';
+
+  # scoped for requirements in the block
+  mirror 'https://backpan.perl.org' => sub {
+    requires 'LWP::ParallelUA' => '== 2.34';
+    requires 'DBD::SQLite' => '== 1.46'
+  };
+
 =back
 
 =head1 USAGE
